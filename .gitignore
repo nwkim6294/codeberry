@@ -1,7 +1,20 @@
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,dotenv,redis,database
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,dotenv,redis,database
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
 
-### Database ###
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
+.ionide
+
+# Database
 *.accdb
 *.db
 *.dbf
@@ -11,31 +24,35 @@
 *.db-shm
 *.db-wal
 
-### dotenv ###
+# dotenv
 .env
 
-### Redis ###
-# Ignore redis binary dump (dump.rdb) files
-
+# Redis
 *.rdb
 
-### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+# macOS
+.DS_Store
 
-# Local History for Visual Studio Code
-.history/
+# Docker
+*.pid
+*.log
 
-# Built Visual Studio Code Extensions
-*.vsix
+# Coverage/test
+.coverage
+htmlcov/
+*.cover
+*.py,cover
 
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
-.ionide
+# Node
+node_modules/
+build/
+dist/
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,dotenv,redis,database
+# Jupyter
+.ipynb_checkpoints
+
+# 임시/캐시/기타
+*.swp
+*.tmp
+logs/
+data/
