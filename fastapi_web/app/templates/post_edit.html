@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 수정</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f6fbff 0%, #f1f7fa 100%);
+            margin: 0;
+            font-family: 'Pretendard', 'Arial', sans-serif;
+        }
+
+        .container {
+            margin: 4rem auto;
+            padding: 2.5rem 2.7rem 2rem 2.7rem;
+            background-color: #fff;
+            border-radius: 18px;
+            max-width: 650px;
+            min-height: 480px;
+            box-shadow: 0 4px 32px 0 rgba(32, 86, 177, 0.10);
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+        }
+
+        h1 {
+            font-size: 25px;
+            color: #185adf;
+            font-weight: bold;
+            margin-bottom: 24px;
+            text-align: center;
+            letter-spacing: 1.5px;
+        }
+
+        .info-box {
+            display: flex;
+            gap: 20px;
+            background: #f6faff;
+            border-radius: 11px;
+            padding: 16px 20px;
+            align-items: center;
+            margin-bottom: 26px;
+            box-shadow: 0 1px 4px rgba(32, 86, 177, 0.04);
+            font-size: 15.5px;
+        }
+
+        .info-label {
+            color: #1762c2;
+            font-weight: 700;
+            margin-right: 5px;
+            font-size: 15.5px;
+        }
+
+        .info-value {
+            color: #23457a;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            width: 100%;
+        }
+
+        label {
+            font-weight: bold;
+            color: #1762c2;
+            display: block;
+            margin-bottom: 7px;
+            font-size: 16px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #b7d0ea;
+            border-radius: 7px;
+            font-size: 15px;
+            background: #f6faff;
+            margin-bottom: 7px;
+        }
+        input[type="text"]:focus,
+        textarea:focus{
+            outline: none;
+            border: 1.5px solid #185adf;
+            background: #eaf4fe;
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            gap: 10px;
+            margin-top: 24px;
+        }
+
+        .action-btn {
+            padding: 10px 27px;
+            font-size: 15.5px;
+            border-radius: 7px;
+            border: 1px solid #1c64f2;
+            background: #eaf2fb;
+            color: #1c64f2;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s;
+        }
+
+        .action-btn:hover {
+            background: #1c64f2;
+            color: #fff;
+            border: 1.5px solid #185adf;
+
+        }
+        .cancel-btn {
+            background: #ffe8ed;
+            color: #e85e7b;
+            border: 1.2px solid #ffd6e0;
+        }
+        .cancel-btn:hover {
+            background: #e85e7b;
+            color: #fff;
+            border: 1.5px solid #e85e7b;
+        }
+    </style>
+</head>
+
+<body>
+    {% include "nav.html" %}
+    <div class="container">
+        <h1>게시글 수정</h1>
+        <form id="editForm">
+            <input type="hidden" id="user_id" value="{{ post.user_id }}">
+            <div class="info-box">
+                <div><span class="info-label">작성자</span>
+                    <span class="info-value">{{ username if username else post.user_id }}</span>
+                </div>
+                <div><span class="info-label">조회수</span>
+                    <span class="info-value">{{ post.cnt if post.cnt is not none else 0 }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input id="title" name="title" type="text" value="{{ post.title }}" required>
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea id="content" name="content" required>{{ post.content }}</textarea>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="action-btn cancel-btn" onclick="location.href='/post_detail/{{ post.id }}'">취소</button>
+                        <button type="submit" class="action-btn">수정</button>
+
+        </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById("editForm").onsubmit = async function (e) {
+            e.preventDefault();
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const user_id = document.getElementById('user_id').value;
+            const response = await fetch(`/posts/{{ post.id }}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title, content, user_id })
+            });
+            if (response.ok) {
+                alert("수정 완료!");
+                location.href = "/post_detail/{{ post.id }}";
+            } else {
+                alert("수정 실패!");
+            }
+        }
+    </script>
+</body>
+</html>

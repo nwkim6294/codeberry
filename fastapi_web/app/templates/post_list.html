@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 목록</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f6fbff 0%, #f1f7fa 100%);
+            margin: 0;
+            font-family: 'Pretendard', 'Arial', sans-serif;
+        }
+
+        .container {
+            margin: 4rem auto;
+            padding: 2.2rem 2.5rem 2.5rem 2.5rem;
+            background-color: #fff;
+            border-radius: 18px;
+            max-width: 820px;
+            box-shadow: 0 4px 32px 0 rgba(32, 86, 177, 0.10);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 480px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #185adf;
+            margin-bottom: 28px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 570px;
+            margin-bottom: 10px;
+            background: #fafcff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(32, 86, 177, 0.06);
+            width: 800px;
+            table-layout: fixed;
+            text-align: center;
+        }
+
+        th {
+            background: #e3ecfa;
+            color: #185adf;
+            font-weight: bold;
+            padding: 18px 14px;
+            font-size: 16px;
+            border-bottom: 2px solid #e0eafc;
+        }
+
+        td {
+            color: #2b3760;
+            font-size: 15.5px;
+            padding: 14px 13px;
+            background: #fafdff;
+            border-bottom: 1.5px solid #ecf1fb;
+            transition: background 0.14s;
+            word-break: break-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        tr:hover td {
+            background: #f2f6fc;
+        }
+
+        td a {
+            color: #2468e2;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.18s;
+        }
+
+        td a:hover {
+            color: #0c3466;
+            text-decoration: underline;
+        }
+
+        .action-btn {
+            padding: 7px 18px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            margin-right: 8px;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(32, 86, 177, 0.05);
+            transition: background 0.18s, color 0.18s, box-shadow 0.15s;
+            background: #eaf4fe;
+            color: #2067e5;
+            border: 1px solid #b7d0ea;
+        }
+
+        .action-btn:hover {
+            background: #2067e5;
+            color: #fff;
+            border: 1px solid #2067e5;
+        }
+
+        .delete-btn {
+            background: #ffe8ed;
+            color: #e85e7b;
+            border: 1px solid #ffd6e0;
+            margin-right: 0;
+        }
+
+        .delete-btn:hover {
+            background: #e85e7b;
+            color: #fff;
+            border: 1px solid #e85e7b;
+        }
+
+        /* 페이지네이션 */
+        .pagination {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+
+        .pagination a,
+        .pagination span {
+            padding: 8px 18px;
+            border-radius: 7px;
+            border: 1px solid #b7d0ea;
+            background: #eaf4fe;
+            color: #2468e2;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 15px;
+            transition: background 0.17s, color 0.17s;
+        }
+
+        .pagination span {
+            background: #2067e5;
+            color: #fff;
+            border: 1.5px solid #2067e5;
+        }
+
+        .pagination a:hover {
+            background: #185adf;
+            color: #fff;
+        }
+
+        /* 컬럼 너비 고정 */
+        th:nth-child(1), td:nth-child(1) { width: 65px; }
+        th:nth-child(2), td:nth-child(2) { width: 270px; }
+        th:nth-child(3), td:nth-child(3) { width: 120px; }
+        th:nth-child(4), td:nth-child(4) { width: 70px; }
+        th:nth-child(5), td:nth-child(5) { width: 150px; }
+    </style>
+</head>
+<body>
+    {% include "nav.html" %}
+    <div class="container">
+
+        <h1>게시글 목록</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>조회수</th>
+                    <th>관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if post_user_list %}
+                    {% for post, user in post_user_list %}
+                    <tr>
+                        <td>{{ post.id }}</td>
+                        <td>
+                            <a href="/post_detail/{{ post.id }}">{{ post.title }}</a>
+                        </td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ post.cnt if post.cnt is not none else 0 }}</td>
+                        <td>
+                            <button class="action-btn" onclick="location.href='/post_edit/{{ post.id }}'">수정</button>
+                            <button class="action-btn delete-btn" onclick="deletePost({{ post.id }})">삭제</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align:center;">게시글이 없습니다.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <div style="width:100%; display:flex; justify-content: flex-end; margin-top:18px;">
+            <button class="action-btn" onclick="location.href='/post_create'">새 글 작성</button>
+        </div>
+    </div>
+    <div class="pagination">
+        {% if total_page > 1 %}
+            {% if page > 1 %}
+                <a href="/post_list/?page={{ page - 1 }}">이전</a>
+            {% endif %}
+            {% for p in range(1, total_page + 1) %}
+                {% if p == page %}
+                    <span>{{ p }}</span>
+                {% else %}
+                    <a href="/post_list/?page={{ p }}">{{ p }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page < total_page %}
+                <a href="/post_list/?page={{ page + 1 }}">다음</a>
+            {% endif %}
+        {% endif %}
+    </div>
+    <script>
+        async function deletePost(postId) {
+            if (!confirm(`${postId}번 게시글을 삭제하시겠습니까?`)) return;
+            try {
+                const response = await fetch(`/posts/${postId}`, { method: "DELETE" });
+                if (response.ok) {
+                    alert('게시글 삭제 완료!');
+                    window.location.reload();
+                } else {
+                    const err = await response.json();
+                    alert('게시글 삭제 실패: ' + (err.detail || ''));
+                }
+            } catch (e) {
+                alert('삭제 중 오류');
+            }
+        }
+    </script>
+</body>
+</html>

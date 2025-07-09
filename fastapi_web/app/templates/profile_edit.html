@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>프로필 수정</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f6fbff 0%, #f1f7fa 100%);
+            margin: 0;
+            font-family: 'Pretendard', 'Arial', sans-serif;
+        }
+        .container {
+            margin: 4rem auto;
+            padding: 2.5rem 2.7rem 2.1rem 2.7rem;
+            background: #fff;
+            border-radius: 18px;
+            max-width: 650px;
+            min-height: 480px;
+            box-shadow: 0 4px 32px 0 rgba(32, 86, 177, 0.10);
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+        }
+        h1 {
+            font-size: 25px;
+            color: #185adf;
+            font-weight: bold;
+            margin-bottom: 24px;
+            text-align: center;
+            letter-spacing: 1.2px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        label {
+            font-weight: bold;
+            color: #1762c2;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 15.5px;
+        }
+        input[type="text"], textarea {
+            width: 630px;
+            padding: 10px 12px;
+            border: 1px solid #b7d0ea;
+            border-radius: 7px;
+            font-size: 15px;
+            background: #f6faff;
+            color: #2b3760;
+            margin-bottom: 6px;
+            transition: border 0.18s, background 0.16s;
+        }
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border: 1.5px solid #185adf;
+            background: #eaf4fe;
+        }
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            gap: 10px;
+            margin-top:100px;
+        }
+        .action-btn {
+            padding: 10px 27px;
+            font-size: 15.5px;
+            border-radius: 7px;
+            border: 1px solid #1c64f2;
+            background: #eaf2fb;
+            color: #1c64f2;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s, color 0.18s, border 0.16s;
+        }
+        .action-btn:hover {
+            background: #1c64f2;
+            color: #fff;
+        }
+        .cancel-btn {
+            background: #ffe8ed;
+            color: #e85e7b;
+            border: 1px solid #ffd6e0;
+        }
+        .cancel-btn:hover {
+            background: #e85e7b;
+            color: #fff;
+            border: 1px solid #e85e7b;
+        }
+        .link {
+            margin-top: 16px;
+            font-size: 15px;
+            text-align: right;
+            width: 100%;
+        }
+        .link a {
+            color: #1c64f2;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 6px;
+            background: #eaf2fb;
+            border: 1px solid #b7d0ea;
+            transition: background 0.17s, color 0.17s;
+        }
+        .link a:hover {
+            background: #1c64f2;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    {% include "nav.html" %}
+    <div class="container">
+        <h1>프로필 수정</h1>
+        <form id="editProfileForm" autocomplete="off">
+            <div class="form-group">
+                <label for="bio">자기소개 (bio)</label>
+                <textarea id="bio" name="bio" placeholder="간단한 자기소개">{{ profile.bio or '' }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="phone">전화번호 (phone)</label>
+                <input id="phone" name="phone" type="text" placeholder="전화번호" value="{{ profile.phone or '' }}">
+            </div>
+            <div class="btn-group">
+                <button type="button" class="action-btn cancel-btn" onclick="location.href='/profile/{{ profile.user_id }}'">취소</button>
+                <button type="submit" class="action-btn">저장</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById("editProfileForm").onsubmit = async function(e) {
+            e.preventDefault();
+            const bio = document.getElementById('bio').value;
+            const phone = document.getElementById('phone').value;
+            const user_id = {{ profile.user_id }};
+            const response = await fetch(`/profiles/${user_id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ bio, phone })
+            });
+            if (response.ok) {
+                alert('프로필이 저장되었습니다.');
+                window.location.href = `/profile/${user_id}`;
+            } else {
+                const err = await response.json();
+                alert("저장 실패: " + (err.detail || ''));
+            }
+        }
+    </script>
+</body>
+</html>

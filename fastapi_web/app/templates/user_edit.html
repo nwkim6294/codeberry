@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 정보 수정</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f6fbff 0%, #f1f7fa 100%);
+            margin: 0;
+            font-family: 'Pretendard', 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 420px;
+            margin: 48px auto 0 auto;
+            background: #fff;
+            padding: 36px 28px 30px 28px;
+            border-radius: 14px;
+            box-shadow: 0 2px 18px rgba(32,86,177,0.10);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            font-size: 26px;
+            color: #1c64f2;
+            margin-bottom: 28px;
+            text-align: center;
+            font-weight: 700;
+            letter-spacing: 1.1px;
+        }
+        .user-info-table {
+            width: 100%;
+            background: #fafcff;
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(32,86,177,0.05);
+            margin-bottom: 24px;
+            border: 1px solid #eaf2fb;
+            overflow: hidden;
+        }
+        .user-info-table th, .user-info-table td {
+            padding: 11px 16px;
+            font-size: 15.5px;
+            text-align: left;
+            color: #2445a6;
+            border-bottom: 1px solid #eaf2fb;
+        }
+        .user-info-table th {
+            background: #eaf2fb;
+            font-weight: 700;
+            color: #1762c2;
+            width: 80px;
+            border-right: 1px solid #eaf2fb;
+        }
+        .user-info-table tr:last-child th,
+        .user-info-table tr:last-child td {
+            border-bottom: none;
+        }
+        .not-found {
+            color: #e85e7b;
+            margin-bottom: 18px;
+            font-size: 15px;
+            background: #ffe8ed;
+            padding: 12px 0;
+            border-radius: 7px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 18px;
+            width: 100%;
+        }
+        label {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 6px;
+            color: #1762c2;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #b7d0ea;
+            border-radius: 7px;
+            box-sizing: border-box;
+            font-size: 15px;
+            background: #fafdff;
+            color: #2b3760;
+            margin-bottom: 2px;
+            transition: border 0.14s, background 0.14s;
+        }
+        input:focus {
+            border: 1.2px solid #1c64f2;
+            background: #eaf4fe;
+            outline: none;
+        }
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            margin-top: 12px;
+            justify-content: flex-end;
+        }
+        .action-btn {
+            padding: 7px 18px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            border: 1px solid #b7d0ea;
+            background: #eaf4fe;
+            color: #2067e5;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(32, 86, 177, 0.05);
+            transition: background 0.18s, color 0.18s, border 0.18s;
+        }
+        .action-btn:hover {
+            background: #2067e5;
+            color: #fff;
+            border: 1px solid #2067e5;
+        }
+        .cancel-btn {
+            background: #ffe8ed;
+            color: #e85e7b;
+            border: 1px solid #ffd6e0;
+        }
+        .cancel-btn:hover {
+            background: #e85e7b;
+            color: #fff;
+            border: 1px solid #e85e7b;
+        }
+    </style>
+</head>
+<body>
+    {% include "nav.html" %}
+    <div class="container">
+        <h1>회원 정보 수정</h1>
+        {% if user %}
+            <table class="user-info-table">
+                <tr>
+                    <th>ID</th>
+                    <td>{{ user.id }}</td>
+                </tr>
+            </table>
+            <div class="form-group">
+                <label for="username">이름</label>
+                <input id="username" type="text" value="{{ user.username }}" />
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input id="email" type="email" value="{{ user.email }}" />
+            </div>
+            <div class="btn-group">
+                <button class="action-btn cancel-btn" onclick="location.href='/user_list'">취소</button>
+                <button class="action-btn" onclick="updateUser({{ user.id }})">수정 완료</button>
+            </div>
+        {% else %}
+            <p class="not-found">사용자를 찾을 수 없습니다.</p>
+            <div class="btn-group">
+                <button class="action-btn cancel-btn" onclick="location.href='/user_list'">돌아가기</button>
+            </div>
+        {% endif %}
+    </div>
+    <script>
+        async function updateUser(userId) {
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            if (!username || !email) {
+                alert('모든 필드를 입력하세요.');
+                return;
+            }
+            const response = await fetch(`/users/${userId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email })
+            });
+            if (response.ok) {
+                alert('회원 정보가 수정되었습니다!');
+                window.location.href = "/user_list";
+            } else {
+                const error = await response.json();
+                alert(`수정 실패: ${error.detail}`);
+            }
+        }
+    </script>
+</body>
+</html>

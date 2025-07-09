@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>프로필 생성</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f6fbff 0%, #f1f7fa 100%);
+            margin: 0;
+            font-family: 'Pretendard', 'Arial', sans-serif;
+        }
+        .container {
+
+            max-width: 620px;
+            margin: 48px auto 0 auto;
+            background: #fff;
+            padding: 36px 28px 30px 28px;
+            border-radius: 14px;
+            box-shadow: 0 2px 18px rgba(32, 86, 177, 0.10);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 440px;
+        }
+        h1 {
+            font-size: 26px;
+            color: #1c64f2;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 18px;
+            width: 100%;
+        }
+        label {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 15px;
+            color: #1762c2;
+            font-weight: 600;
+        }
+        input, textarea {
+            width: 500px;
+            padding: 10px 12px;
+            border: 1px solid #b7d0ea;
+            border-radius: 7px;
+            box-sizing: border-box;
+            font-size: 15px;
+            background: #fafdff;
+            color: #2b3760;
+            margin-bottom: 1px;
+            transition: border 0.14s, background 0.14s;
+        }
+        textarea { 
+            min-height: 90px; 
+            resize: vertical;
+            margin-bottom: 10px;
+        
+        }
+        input{
+            margin-bottom: 55px;
+
+        }
+        input:focus, textarea:focus {
+            border: 1.2px solid #1c64f2;
+            background: #eaf4fe;
+            outline: none;
+        }
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        .action-btn {
+            padding: 7px 18px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            border: 1px solid #b7d0ea;
+            background: #eaf4fe;
+            color: #2067e5;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(32, 86, 177, 0.05);
+            transition: background 0.18s, color 0.18s, box-shadow 0.15s, border 0.18s;
+        }
+        .action-btn:hover {
+            background: #2067e5;
+            color: #fff;
+            border: 1px solid #2067e5;
+        }
+        .cancel-btn {
+            background: #ffe8ed;
+            color: #e85e7b;
+            border: 1px solid #ffd6e0;
+        }
+        .cancel-btn:hover {
+            background: #e85e7b;
+            color: #fff;
+            border: 1px solid #e85e7b;
+        }
+        .link {
+            margin-top: 14px;
+            font-size: 15px;
+            text-align: right;
+            width: 100%;
+        }
+        .link a {
+            color: #1c64f2;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 12px;
+            border-radius: 6px;
+            background: #eaf2fb;
+            border: 1px solid #b7d0ea;
+            transition: background 0.17s, color 0.17s;
+        }
+        .link a:hover {
+            background: #1c64f2;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+                {% include "nav.html" %}
+    <div class="container">
+
+
+        <h1>프로필 생성</h1>
+        <form id="profileForm" autocomplete="off">
+            <div class="form-group">
+                <label for="bio">자기소개 (bio)</label>
+                <textarea id="bio" name="bio" placeholder="간단한 자기소개"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="phone">전화번호 (phone)</label>
+                <input id="phone" name="phone" type="text" placeholder="전화번호">
+            </div>
+            <div class="btn-group">
+                                <button type="button" class="action-btn cancel-btn" onclick="location.href='/user_list/'">취소</button>
+
+                <button type="submit" class="action-btn">프로필 저장</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById("profileForm").onsubmit = async function(e) {
+            e.preventDefault();
+            const bio = document.getElementById('bio').value;
+            const phone = document.getElementById('phone').value;
+            const user_id = {{ user_id }}; // Jinja2에서 정상적으로 값 들어감
+            const response = await fetch(`/profiles/`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id, bio, phone })
+            });
+            if (response.ok) {
+                alert('프로필이 저장되었습니다.');
+                window.location.href = `/profile/${user_id}`;
+            } else {
+                const err = await response.json();
+                alert("프로필 생성 실패: " + (err.detail || ''));
+            }
+        }
+    </script>
+</body>
+</html>
