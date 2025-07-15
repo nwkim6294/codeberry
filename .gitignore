@@ -56,4 +56,4 @@ dist/
 *.tmp
 logs/
 data/
-uploads
+uploads/
