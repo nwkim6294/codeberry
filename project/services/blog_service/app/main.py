@@ -147,6 +147,7 @@ async def list_articles(
 
     # 한 개만 받아오기         
     # items_with_details = []
+     
     # for article in articles:
     #     article_dict = article.model_dump()
     #     article_dict["author_username"] = authors.get(article.owner_id, "Unknown")
