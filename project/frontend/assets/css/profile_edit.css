@@ -1,0 +1,269 @@
+/* frontend/assets/css/profile_edit.css */
+/* ─── reset & 기본 ───────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Pretendard', sans-serif;
+  background: linear-gradient(135deg, #f6fbff 0%, #f1f7fa 100%);
+  color: #0d324d;
+  line-height: 1.5;
+}
+
+/* ─── 헤더 ───────────────────────────────────────────────────────────────── */
+.header {
+  position: relative;
+  height: 4rem;
+  /* background: rgba(255,255,255,0.8); */
+  background-color: #ffffff;
+  backdrop-filter: blur(5px);
+  
+  /* 가운데 정렬: nav가 플렉스 중앙에 오도록 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+/* 왼쪽: 로고 */
+.header-left {
+  position: absolute;
+  left: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header-left .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0d324d;
+}
+
+
+/* 중앙: 네비게이션 */
+.nav-center ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+.nav-center a {
+  text-decoration: none;
+  color: #0d324d;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-center a:hover,
+.nav-center a.active {
+  background: #235ab5;
+  color: #fff;
+}
+
+/* 오른쪽: 인사 & 로그아웃 */
+.header-right {
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.header-right .greeting {
+  /* font-weight: bold; */
+  color: #0d324d;
+}
+.header-right .logout-btn {
+  background: transparent;
+  border: 1px solid #c0392b;
+  border-radius: 4px;
+  color: #c0392b;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+.header-right .logout-btn:hover {
+  background: #c0392b;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  transform: translateY(-1px);
+}
+.header-right .logout-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* ─── 메인 컨테이너 & 카드 ───────────────────────────────────────────────── */
+.main-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.edit-profile-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ─── 프로필 섹션 (사진 · 이름 · bio) ─────────────────────────────────────── */
+.photo-preview {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ─── 파일 선택 버튼 커스텀 ──────────────────────────────────────────────── */
+input[type="file"] {
+  display: block;
+  margin: 0 auto 1.5rem;
+  font-size: 0;
+}
+input[type="file"]::file-selector-button {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #389cff 0%, #1854c7 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+input[type="file"]::file-selector-button:hover {
+  background: linear-gradient(90deg, #1854c7 0%, #184eb5 100%);
+  transform: translateY(-1px);
+}
+
+/* ─── 폼 그룹 ────────────────────────────────────────────────────────────── */
+.form-group {
+  margin-bottom: 1rem;
+    font-family: 'Pretendard', sans-serif;
+
+}
+.form-group label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+    font-family: 'Pretendard', sans-serif;
+
+  padding: 0.6rem;
+  border: 1px solid #b7d0ea;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+.form-group textarea {
+    font-family: 'Pretendard', sans-serif;
+
+  resize: vertical;
+}
+
+/* ─── 버튼 액션 ───────────────────────────────────────────────────────────── */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+.btn {
+  flex: 1;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn.save {
+  background: linear-gradient(90deg, #389cff 0%, #1854c7 100%);
+  border: none;
+  color: #fff;
+}
+.btn.save:hover {
+  background: linear-gradient(90deg, #1854c7 0%, #184eb5 100%);
+  transform: translateY(-1px);
+}
+.btn.cancel {
+  background: transparent;
+  border: 2px solid #1854c7;
+  color: #1854c7;
+}
+.btn.cancel:hover {
+  background: #1854c7;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* ─── 비밀번호 섹션 ───────────────────────────────────────────────────────── */
+h3 {
+  font-size:20px;
+  margin-bottom: 30px;
+  color: #194eb5;
+  text-align: left;
+}
+
+/* ─── 반응형 ─────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .edit-profile-card {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+}
+
+/* 탭 컨텐츠 숨김/표시 */
+.tab-content {
+  display: none;
+    font-family: 'Pretendard', sans-serif;
+
+}
+.tab-content.active {
+  display: block;
+    font-family: 'Pretendard', sans-serif;
+
+}
+
+/* 탭 메뉴 */
+/* 탭 버튼 스타일 */
+.tab-menu { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+.tab-btn {
+  flex: 1;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  color: #555;
+}
+.tab-btn.active {
+    font-family: 'Pretendard', sans-serif;
+
+  border-color: #235ab5;
+  color: #235ab5;
+}
+

@@ -1,0 +1,66 @@
+<!-- frontend/signup.html -->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입 – My Private Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/css/signup.css" rel="stylesheet">
+    <script defer src="assets/js/signup.js"></script>
+</head>
+
+<body>
+    <div class="main-bg"></div>
+    <div class="main-layout">
+        <!-- 왼쪽 브랜드 영역 -->
+        <section class="main-left">
+            <div class="main-brand">
+                <div class="logo-emo">📓</div>
+                <div class="logo-title">My Private Blog</div>
+                <div class="logo-desc">
+                    다이어리 &amp; 오늘의 감정, 음악을<br>
+                    한 곳에서 프라이빗하게 기록하고 관리하세요.
+                </div>
+                <div class="logo-icons" style="margin-top:24px; font-size:1.7rem;">
+                    📒 📝 🎧 ⭐️ 💬
+                </div>
+            </div>
+        </section>
+
+        <!-- 오른쪽 회원가입 폼 -->
+        <section class="main-loginbox">
+            <form id="signup-form" class="main-form" autocomplete="on" enctype="multipart/form-data">
+                <div class="form-title">회원가입</div>
+                <div class="form-sub">
+                    My Private Blog 계정을 만들어 시작해 보세요!
+                </div>
+
+                <!-- 단일 컬럼 폼 -->
+                <div class="form-single">
+                    <label class="form-label" for="username">사용자 이름</label>
+                    <input type="text" id="username" name="username" class="form-input" placeholder="사용자 이름" required>
+
+                    <label class="form-label" for="email">이메일(로그인 ID)</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="이메일" required>
+
+                    <label class="form-label" for="password">비밀번호</label>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="비밀번호" required>
+
+                    <label class="form-label" for="passwordConfirm">비밀번호 확인</label>
+                    <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-input" placeholder="비밀번호 확인" required>
+                </div>
+
+                <button class="btn-main" id="submit-btn" type="submit">회원가입</button>
+                <div id="signup-error" class="login-error"></div>
+
+                <div class="form-footer">
+                    이미 계정이 있으신가요?
+                    <a href="index.html">로그인</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+
+</html>

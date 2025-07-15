@@ -1,0 +1,51 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>My Private Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/css/index.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <script defer src="assets/js/index_login.js"></script>
+</head>
+<body>
+    <div class="main-bg"></div>
+    <div class="main-layout">
+        <!-- 왼쪽: 브랜드/설명 -->
+        <section class="main-left">
+            <div class="main-brand">
+                <div class="logo-emo">📓</div>
+                <div class="logo-title">My Private Blog</div>
+                <div class="logo-desc">
+                    다이어리 &amp; 오늘의 감정, 음악을<br>
+                    한 곳에서 프라이빗하게 기록하고 관리하세요.
+                </div>
+                <div class="logo-icons" style="margin-top:24px; font-size:1.7rem;">
+                    📒 📝 🎧 ⭐️ 💬
+                </div>
+            </div>
+        </section>
+        <!-- 오른쪽: 로그인 박스 -->
+        <section class="main-loginbox">
+            <form id="login-form" class="main-form" autocomplete="on">
+                <div class="form-title">로그인</div>
+                <div class="form-sub">
+                    My Private Blog에 오신 걸 환영합니다!<br>
+                </div>
+
+                <label class="form-label" for="username">아이디(Email)</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="아이디" required>
+                <label class="form-label" for="password">비밀번호</label>
+                <input type="password" id="password" name="password" class="form-input" placeholder="비밀번호" required>
+                <button class="btn-main" type="submit">로그인</button>
+                <div id="login-error" class="login-error"></div>
+                <div class="form-footer">
+                    계정이 없으신가요?
+                    <a href="signup.html">회원가입</a>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

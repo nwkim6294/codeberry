@@ -1,0 +1,147 @@
+/* frontend/assets/css/index.css */
+html, body {
+    width: 100vw;
+    height: 100vh;
+    min-width: 0;
+    min-height: 0;
+    max-width: 100vw;
+    max-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden !important;  /* ← 스크롤 방지 */
+    font-family: 'Pretendard', 'Noto Sans KR', 'Arial', sans-serif;
+}
+.main-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    /* 웹과 잘 어울리는 부드러운 블루 그라데이션 */
+    background: linear-gradient(135deg, #0d324d 0%, #1f8efc 100%);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.main-layout {
+    position: absolute;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    min-width: 0;
+    min-height: 0;
+    top: 0; left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.main-left,
+.main-loginbox {
+    height: 100vh;
+    min-height: 0;
+    min-width: 0;
+
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding이 너무 크면 100vh를 넘으니 줄이기 */
+    padding: 0;
+}
+.main-left { 
+    flex: 1 1 0; 
+    color: #fff; 
+}
+.main-brand {
+    text-align: left;
+    min-width: 290px;
+    max-width: 380px;
+}
+.logo-emo { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.96; }
+.logo-title { font-size: 2.1rem; font-weight: 900; margin-bottom: 14px; letter-spacing: 1.5px; }
+.logo-desc { font-size: 1.13rem; line-height: 1.6; opacity: 0.98; font-weight: 400; }
+.logo-icons { margin-top: 18px; }
+
+.main-loginbox { 
+    flex: 1 1 0; 
+    
+}
+.main-form {
+    background: #fff;
+    border-radius: 18px;
+    margin: auto;
+    box-shadow: 0 8px 32px #19406833;
+    padding: 40px 56px;
+    min-width: 320px;
+    max-width: 510px;
+    max-height: 630px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-sizing: border-box;
+    justify-content: center;
+}
+.form-title { 
+    font-size: 2rem; 
+    font-weight: 800; 
+    color: #194eb5; 
+    margin-bottom: 7px; 
+}
+.form-sub { 
+    font-size: 1.01rem; 
+    color: #345178; 
+    margin-bottom: 19px; 
+    line-height: 1.42; 
+}
+.form-label { 
+    font-size: 1.01rem; 
+    color: #345178; 
+    margin-top: 13px; 
+    margin-bottom: 3px; 
+    font-weight: 600; 
+}
+.form-input {
+    font-size: 1.07rem;
+    padding: 12px 12px;
+    border: 1.4px solid #d2e3fa;
+    border-radius: 7px;
+    outline: none;
+    background: #f6fbff;
+    transition: border 0.14s;
+    margin-bottom: 5px;
+}
+.form-input:focus { border: 1.4px solid #235ab5; background: #fff; }
+.btn-main {
+    width: 100%;
+    margin-top: 16px;
+    padding: 13px 0;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(90deg, #389cff 0%, #1854c7 100%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.09rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #184eb522;
+    transition: background 0.16s;
+}
+.btn-main:hover { background: linear-gradient(90deg, #1854c7 0%, #184eb5 100%); }
+.login-error { margin: 14px 0 0 0; color: #ff4055; font-size: 0.97rem; display: none; }
+.form-footer { margin-top: 18px; text-align: center; font-size: 1.01rem; color: #345178; }
+.form-footer a { color: #1854c7; text-decoration: underline; margin-left: 4px; font-weight: 500; }
+
+/* 반응형 (모바일) */
+@media (max-width: 900px) {
+    .main-layout { flex-direction: column; }
+    .main-left, .main-loginbox {
+        min-width: 0; width: 100vw; height: 45vh;
+        padding: 0;
+        align-items: center; justify-content: center;
+    }
+    .main-brand { margin-left: 0; text-align: center;}
+    .main-form { min-width: 0; width: 92vw; max-width: 98vw; padding: 30px 3vw;}
+}

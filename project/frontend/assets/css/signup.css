@@ -1,0 +1,164 @@
+/* frontend/assets/css/signup.css */
+html, body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden !important;
+    font-family: 'Pretendard', 'Noto Sans KR', 'Arial', sans-serif;
+}
+
+.main-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(135deg, #0d324d 0%, #1f8efc 100%);
+    background-size: cover;
+    background-position: center;
+}
+
+.main-layout {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.main-left,
+.main-loginbox {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main-left {
+    color: #fff;
+}
+
+.main-brand {
+    max-width: 380px;
+    text-align: left;
+}
+
+.logo-emo { font-size: 2.5rem; margin-bottom: 12px; opacity: 0.96; }
+.logo-title { font-size: 2.1rem; font-weight: 900; margin-bottom: 14px; letter-spacing: 1.5px; }
+.logo-desc { font-size: 1.13rem; line-height: 1.6; opacity: 0.98; }
+.logo-icons { margin-top: 18px; font-size: 1.7rem; }
+
+.main-loginbox { flex: 2; }
+
+.main-form {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px #19406833;
+    padding: 40px 56px;
+    width: 100%;
+    max-width: 730px;
+    max-height: 630px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.form-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #194eb5;
+}
+
+.form-sub {
+    font-size: 1.01rem;
+    color: #345178;
+    line-height: 1.42;
+    margin-bottom: 10px;
+}
+
+.form-single {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-label {
+    font-size: 1.01rem;
+    color: #345178;
+    font-weight: 600;
+}
+
+.form-input {
+    font-size: 1.07rem;
+    padding: 12px;
+    border: 1.4px solid #d2e3fa;
+    border-radius: 7px;
+    background: #f6fbff;
+    outline: none;
+    transition: border 0.14s, background 0.14s;
+}
+
+.form-input:focus {
+    border-color: #235ab5;
+    background: #fff;
+}
+
+.btn-main {
+    margin-top: 19px;
+    width: 100%;
+    padding: 13px 0;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #389cff 0%, #1854c7 100%);
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.09rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #184eb522;
+    transition: background 0.16s;
+}
+
+.btn-main:hover {
+    background: linear-gradient(90deg, #1854c7 0%, #184eb5 100%);
+}
+
+.login-error {
+    color: #ff4055;
+    font-size: 0.97rem;
+    display: none;
+    margin-top: 8px;
+}
+
+.form-footer {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 1.01rem;
+    color: #345178;
+}
+
+.form-footer a {
+    color: #1854c7;
+    text-decoration: underline;
+    margin-left: 4px;
+    font-weight: 500;
+}
+
+/* 반응형 (모바일) */
+@media (max-width: 900px) {
+    .main-layout { flex-direction: column; }
+    .main-left, .main-loginbox {
+        width: 100vw;
+        height: auto;
+    }
+    .main-brand { text-align: center; }
+    .main-form {
+        width: 92vw;
+        max-width: 98vw;
+        padding: 30px 3vw;
+    }
+}

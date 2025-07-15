@@ -1,0 +1,84 @@
+<!-- frontend/home.html -->
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>My Private Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="assets/css/home.css" rel="stylesheet">
+  <script defer src="assets/js/home.js"></script>
+
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">My Private Blog</div>
+    </div>
+
+    <nav class="nav-center">
+      <ul>
+        <li><a href="home.html" class="active">홈</a></li>
+        <li><a href="blog.html">블로그</a></li>
+        <li><a href="music.html">음악 리뷰</a></li>
+      </ul>
+    </nav>
+<!-- --------------------------------------------------------------------------------- -->
+    <div class="header-right">
+    <span id="greeting" class="greeting">안녕하세요! ——님</span>      
+    <button id="logout-btn" class="logout-btn">로그아웃</button>
+  </div>
+  </header>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+
+
+<main class="main-container">
+  <aside class="sidebar">
+    <div class="profile-card">
+      <img id="profile-img"
+           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGgb-MKKZNd_EdI5bAy7lap5yLIczcl1okag&s"
+           alt="프로필 사진"
+           class="profile-img">
+      <div class="profile-info">
+        <h3 id="profile-name">——님</h3>
+        <p id="profile-bio">——</p>
+      </div>
+      <a href="profile_edit.html" class="edit-profile-btn" title="프로필 수정">✏️</a>
+    </div>
+
+    <div class="stats-summary">
+      <h4>내 기록 요약</h4>
+      <ul>
+        <li>📝 블로그: <strong id="stat-diary">0</strong>개</li>
+        <li>🎧 음악: <strong id="stat-music">0</strong>곡</li>
+        <li>⭐ 평균 평점: <strong id="stat-rating">0.0</strong></li>
+        <li>🔥 연속: <strong id="stat-streak">0</strong>일</li>
+      </ul>
+    </div>
+  </aside>
+
+<section class="content-area">
+    <div class="hero-card">…</div>
+
+    <div class="preview-grid">
+      <div class="preview-card">
+        <h2>오늘의 일기</h2>
+        <p id="today-diary-content">불러오는 중...</p>
+        <a href="blog.html">→ 더 보기</a>
+      </div>
+      <div class="preview-card">
+        <h2>최근 음악 리뷰</h2>
+        <ul id="recent-music-list">
+          <li>불러오는 중...</li>
+        </ul>
+        <a href="music.html">→ 더 보기</a>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+
+</html>

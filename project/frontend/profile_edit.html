@@ -1,0 +1,89 @@
+<!-- frontend/profile_edit.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>프로필 수정 – My Private Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="assets/css/profile_edit.css" rel="stylesheet">
+  <script defer src="assets/js/profile_edit.js"></script>
+
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">My Private Blog</div>
+    </div>
+
+    <nav class="nav-center">
+      <ul>
+        <li><a href="home.html" class="active">홈</a></li>
+        <li><a href="blog.html">블로그</a></li>
+        <li><a href="music.html">음악 리뷰</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-right">
+      <span class="greeting">안녕하세요! {{ username }}님</span>
+      <button class="logout-btn">로그아웃</button>
+    </div>
+  </header>
+
+<!-- --------------------------------------------------------------------------------- -->
+ <main class="main-container">
+
+
+    <section class="edit-profile-card">
+  <!-- ── 탭 메뉴 삽입 ── -->
+  <div class="tab-menu">
+    <button class="tab-btn active" data-target="profile-form">프로필</button>
+    <button class="tab-btn"        data-target="password-form">비밀번호</button>
+  </div>
+
+
+      <!-- ── 프로필 폼 ── -->
+      <form id="profile-form" class="tab-content active" enctype="multipart/form-data">
+        <h3>프로필 정보 수정</h3>
+        <div class="photo-preview">
+          <img id="profile-img" src="" alt="프로필 사진">
+        </div>
+        <input type="file" id="profile_image" name="profile_image" accept="image/*">
+        <div class="form-group">
+          <label for="username">닉네임</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="bio">한 줄 소개</label>
+          <textarea id="bio" name="bio" rows="3" placeholder="간단한 자기소개"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn save">저장하기</button>
+          <button type="button" class="btn cancel">취소</button>
+        </div>
+      </form>
+
+      <!-- ── 비밀번호 폼 ── -->
+      <form id="password-form" class="tab-content">
+        <h3>비밀번호 변경</h3>
+        <div class="form-group">
+          <label for="current_password">현재 비밀번호</label>
+          <input type="password" id="current_password" name="current_password" required>
+        </div>
+        <div class="form-group">
+          <label for="new_password">새 비밀번호</label>
+          <input type="password" id="new_password" name="new_password" required>
+        </div>
+        <div class="form-group">
+          <label for="new_password_confirm">새 비밀번호 확인</label>
+          <input type="password" id="new_password_confirm" name="new_password_confirm" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn save">변경하기</button>
+          <button type="button" class="btn cancel">취소</button>
+        </div>
+      </form>
+
+    </section>
+  </main>
+</body>
+</html>

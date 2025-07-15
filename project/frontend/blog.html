@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog – My Private Blog</title>
+  <link href="assets/css/blog.css" rel="stylesheet" />
+    <script defer src="assets/js/blog.js"></script>
+</head>
+
+<body>
+  <!-- ─── 헤더 (수정 없음) ─────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">My Private Blog</div>
+    </div>
+    <nav class="nav-center">
+      <ul>
+        <li><a href="home.html">홈</a></li>
+        <li><a href="blog.html" class="active">블로그</a></li>
+        <li><a href="music.html">음악 리뷰</a></li>
+      </ul>
+    </nav>
+    <div class="header-right">
+      <span id="greeting" class="greeting">안녕하세요! 나운 김님</span>
+      <button id="logout-btn" class="logout-btn">로그아웃</button>
+    </div>
+  </header>
+
+  <!-- ─── 메인 컨테이너 & 래퍼 카드 ──────────────────────────────── -->
+  <!-- ─── 메인 컨테이너 ───────────────────────────────────────── -->
+  <main class="diary-container">
+    <div class="diary-card-wrapper">
+      <div class="list-header">
+        <h2>블로그</h2>
+        <a href="new_blog.html" class="btn new-page">＋ 새 글쓰기</a>
+      </div>
+      <!-- 실제 렌더링 시 JS에서 여기를 채웁니다 -->
+      <section class="entries-list"></section>
+    </div>
+  </main>
+</body>
+</html>

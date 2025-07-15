@@ -1,0 +1,4 @@
+# gateway/requirements.txt
+fastapi
+uvicorn
+httpx

@@ -1,0 +1,11 @@
+#service/user_service/requirements.txt
+fastapi
+python-multipart   # 파일 업로드 지원
+uvicorn[standard]
+sqlmodel
+sqlalchemy[asyncio]
+asyncmy
+python-dotenv
+redis
+passlib[bcrypt]
+bcrypt

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>새 글 쓰기 – My Private Blog</title>
+    <link href="assets/css/new_blog.css" rel="stylesheet" />
+    <script defer src="assets/js/new_blog.js"></script>
+</head>
+
+<body>
+    <!-- ─── 헤더 (수정 없음) ─────────────────────────────────────────────── -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">My Private Blog</div>
+        </div>
+        <nav class="nav-center">
+            <ul>
+                <li><a href="home.html">홈</a></li>
+                <li><a href="blog.html" class="active">블로그</a></li>
+                <li><a href="music.html">음악 리뷰</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <span id="greeting" class="greeting">안녕하세요! 나운 김님</span>
+            <button id="logout-btn" class="logout-btn">로그아웃</button>
+        </div>
+    </header>
+
+    
+ <!-- 새 글 입력 폼 -->
+  <main class="new-blog-container">
+    <div class="new-blog-card">
+      <h2>새 글 작성</h2>
+<form id="new-article-form">
+        <label>
+          제목
+          <input type="text" name="title" placeholder="제목을 입력하세요" required />
+        </label>
+        <label>
+          본문
+          <textarea name="content" rows="5" placeholder="내용을 입력하세요" required></textarea>
+        </label>
+        <label>
+          태그 (콤마로 구분)
+          <input type="text" name="tags" placeholder="예) 코딩,일상" />
+        </label>
+        <label class="file-label">
+          이미지 첨부
+<!-- 수정 -->
+<input  type="file" id="image-input" name="files" accept="image/*" multiple/></label>
+
+        <!-- 이미지 미리보기 영역
+        <div class="image-preview" id="image-preview" style="display: none;">
+          <span>미리 보기</span> -->
+          <!-- <img src="" alt="이미지 미리보기" /> -->
+        <!-- </div>  -->
+
+        <div id="preview-container"></div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn save">저장</button>
+          <a href="blog.html" class="btn cancel">취소</a>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+
+</html>
