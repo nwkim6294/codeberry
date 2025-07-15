@@ -25,30 +25,29 @@
       </ul>
     </nav>
 <!-- --------------------------------------------------------------------------------- -->
-    <div class="header-right">
-    <span id="greeting" class="greeting">안녕하세요! ——님</span>      
+  <div class="header-right">
+    <span id="greeting" class="greeting"></span>
     <button id="logout-btn" class="logout-btn">로그아웃</button>
   </div>
   </header>
-
 <!-- --------------------------------------------------------------------------------- -->
-
-
 
 <main class="main-container">
   <aside class="sidebar">
-    <div class="profile-card">
-      <img id="profile-img"
-           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGgb-MKKZNd_EdI5bAy7lap5yLIczcl1okag&s"
-           alt="프로필 사진"
-           class="profile-img">
-      <div class="profile-info">
-        <h3 id="profile-name">——님</h3>
-        <p id="profile-bio">——</p>
-      </div>
-      <a href="profile_edit.html" class="edit-profile-btn" title="프로필 수정">✏️</a>
+  <div class="profile-card">
+    <img id="profile-img" alt="프로필 사진" class="profile-img">
+    <div class="profile-info">
+      <h3 id="profile-name"></h3>
+      <p id="profile-bio"></p>
     </div>
+          <a href="profile_edit.html" class="edit-profile-btn" title="프로필 수정">✏️</a>
+  </div>
 
+  <!-- home.html, 사이드바 아래 stats-summary 바로 밑에 추가 -->
+  <aside class="tag-cloud">
+    <h4>태그 클라우드</h4>
+    <div id="tag-list"></div>
+  </aside>
     <div class="stats-summary">
       <h4>내 기록 요약</h4>
       <ul>
@@ -59,16 +58,25 @@
       </ul>
     </div>
   </aside>
-
+ 
 <section class="content-area">
-    <div class="hero-card">…</div>
+ <div class="hero-card">
+    <h1><span id="today-date" class="hero-date">…</span></h1>
+    <h2>오늘은 어떤 이야기를 남기시겠어요?</h2>
+    <div class="hero-buttons">
+      <a href="blog.html" class="btn">블로그 보기</a>
+      <a href="new_blog.html" class="btn outline">오늘의 글 쓰기</a>
+    </div>
+  </div>
 
     <div class="preview-grid">
-      <div class="preview-card">
-        <h2>오늘의 일기</h2>
-        <p id="today-diary-content">불러오는 중...</p>
-        <a href="blog.html">→ 더 보기</a>
-      </div>
+        <div class="preview-card">
+          <h2>최근 게시글</h2>
+          <ul id="recent-blog-list">
+            <li>불러오는 중...</li>
+          </ul>
+          <a class="atag" href="blog.html">→ 더 보기</a>
+        </div>
       <div class="preview-card">
         <h2>최근 음악 리뷰</h2>
         <ul id="recent-music-list">

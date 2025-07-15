@@ -1,17 +1,14 @@
-<!-- frontend/new_blog.html -->
+<!-- frontend/blog_edit.html -->
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>새 글 쓰기 – My Private Blog</title>
-  <link href="assets/css/new_blog.css" rel="stylesheet" />
-  <script defer src="assets/js/new_blog.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>글 수정 – My Private Blog</title>
+  <link href="assets/css/blog_edit.css" rel="stylesheet" />
+  <script defer src="assets/js/blog_edit.js"></script>
 </head>
-
 <body>
-  <!-- ─── 헤더 (수정 없음) ─────────────────────────────────────────────── -->
   <header class="header">
     <div class="header-left">
       <div class="logo">My Private Blog</div>
@@ -24,17 +21,16 @@
       </ul>
     </nav>
     <div class="header-right">
-      <span id="greeting" class="greeting">안녕하세요! 나운 김님</span>
+      <span id="greeting" class="greeting">안녕하세요!</span>
       <button id="logout-btn" class="logout-btn">로그아웃</button>
     </div>
   </header>
 
-
-  <!-- 새 글 입력 폼 -->
-  <main class="new-blog-container">
-    <div class="new-blog-card">
-      <h2>새 글 작성</h2>
-      <form id="new-article-form">
+  <!-- 글  수정 입력 폼 -->
+  <main class="edit-container">
+    <div class="edit-card">
+      <h2>글 수정</h2>
+      <form id="edit-article-form">
         <label>
           제목
           <input type="text" name="title" placeholder="제목을 입력하세요" required />
@@ -49,17 +45,16 @@
         </label>
         <label class="file-label">
           이미지 첨부
-          <input type="file" id="image-input" name="files" accept="image/*" multiple />
+          <input type="file" id="image-input" name="files" accept="image/*" multiple/>
         </label>
-        <div id="preview-container"></div>
+        <div id="preview-container" class = "preview-container"></div>
 
         <div class="form-actions">
-          <button type="submit" class="btn save">저장</button>
+          <button type="submit" class="btn save">수정 저장</button>
           <a href="blog.html" class="btn cancel">취소</a>
         </div>
       </form>
     </div>
   </main>
 </body>
-
 </html>

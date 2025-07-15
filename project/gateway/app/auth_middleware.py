@@ -1,3 +1,4 @@
+# gateway/app/auth_middleware.py
 import os
 import httpx
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
@@ -9,7 +10,11 @@ USER_SERVICE_URL = os.getenv('USER_SERVICE_URL')
 
 class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next:RequestResponseEndpoint) -> Response:
-        public_paths = ["/api/auth/login", "/api/auth/register"]
+        public_paths = [
+            "/api/auth/login",
+            "/api/auth/register",
+            "/api/auth/signup"
+        ]
         
         if request.method in ("GET", "OPTIONS") or request.url.path in public_paths:
             return await call_next(request)

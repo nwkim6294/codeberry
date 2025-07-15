@@ -1,4 +1,4 @@
-// frontend/assets/js/blog.js
+// frontend/assets/js/new_blog.js
 document.addEventListener("DOMContentLoaded", async () => {
   const logoutBtn = document.getElementById("logout-btn");
   const greeting  = document.getElementById("greeting");

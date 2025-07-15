@@ -229,3 +229,13 @@ body {
     grid-template-columns: repeat(2,1fr);
   }
 }
+
+
+/* blog.css */
+.entry-card.highlight {
+  animation: highlightAnim 2s ease-out;
+}
+@keyframes highlightAnim {
+  0%   { background-color: #fffbcc; }
+  100% { background-color: transparent; }
+}
