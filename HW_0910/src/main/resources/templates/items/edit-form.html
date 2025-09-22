@@ -1,0 +1,52 @@
+<!-- /templates/items/edit-form.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>물품 정보 수정</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-yellow-50">
+<header class="bg-white shadow-sm">
+    <div class="container mx-auto px-6 py-4">
+        <a href="/" class="text-2xl font-bold text-yellow-600">댕댕이 중고마켓</a>
+    </div>
+</header>
+<div class="container mx-auto max-w-2xl p-8 mt-10 bg-white rounded-xl shadow-md">
+    <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">물품 정보 수정</h1>
+    <form th:action="@{/items/{id}/edit(id=${item.id})}" th:object="${item}" method="post" class="space-y-6">
+        <div>
+            <label for="title" class="block text-sm font-medium text-gray-700">물품명</label>
+            <input type="text" id="title" th:field="*{title}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500" required>
+        </div>
+        <div>
+            <label for="price" class="block text-sm font-medium text-gray-700">가격</label>
+            <input type="number" id="price" th:field="*{price}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500" required>
+        </div>
+        <div>
+            <label for="description" class="block text-sm font-medium text-gray-700">상세 설명</label>
+            <textarea id="description" th:field="*{description}" rows="6" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500" required></textarea>
+        </div>
+        <div class="flex justify-between items-center pt-4">
+             <button type="button" th:attr="data-item-id=${item.id}" onclick="deleteItem(this.getAttribute('data-item-id'))" class="text-sm text-red-500 hover:text-red-700 font-semibold">이 물품 삭제하기</button>
+            <div class="flex space-x-4">
+                <a href="/" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-5 rounded-lg">취소</a>
+                <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-5 rounded-lg">수정 완료</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 추가된 부분: 삭제 로직을 처리하는 JavaScript -->
+<script>
+    function deleteItem(itemId) {
+        if (confirm('이 물품을 정말로 삭제할까요?')) {
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = `/items/${itemId}/delete`;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
+</body>
+</html>
