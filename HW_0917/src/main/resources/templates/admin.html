@@ -1,0 +1,40 @@
+<!-- 관리자 페이지 -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 페이지 - 논쟁의 도서</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded shadow">
+        <h1 class="text-3xl font-bold mb-6">관장 전용 리포트: 논쟁의 도서</h1>
+        <p class="mb-4 text-gray-600">'댕댕파'와 '냥냥파' 모두에게서 서평을 받은, 가장 뜨거운 토론의 중심에 있는 도서 목록입니다.</p>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border">
+                <thead class="bg-amber-800 text-white">
+                    <tr>
+                        <th class="py-2 px-4 border">ID</th>
+                        <th class="py-2 px-4 border">제목</th>
+                        <th class="py-2 px-4 border">저자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="book : ${controversialBooks}" class="hover:bg-gray-50">
+                        <td class="py-2 px-4 border text-center" th:text="${book.id}">1</td>
+                        <td class="py-2 px-4 border" th:text="${book.title}">책 제목</td>
+                        <td class="py-2 px-4 border" th:text="${book.author}">저자</td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(controversialBooks)}">
+                        <td colspan="3" class="text-center py-4">논쟁적인 도서가 없습니다.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <a href="/books" class="mt-6 inline-block bg-gray-500 text-white px-4 py-2 rounded">서재로 돌아가기</a>
+    </div>
+</body>
+</html>

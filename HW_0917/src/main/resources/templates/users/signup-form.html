@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀 서재 회원가입</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #4A403A;
+            background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen py-8">
+    <div class="w-full max-w-md p-8 space-y-6 bg-amber-50 bg-opacity-90 rounded-2xl shadow-2xl backdrop-blur-sm border-4 border-amber-800">
+        <div class="text-center">
+            <h2 class="text-3xl font-extrabold text-amber-900">새로운 지성을 환영합니다</h2>
+            <p class="mt-2 text-amber-700">당신의 서평 파벌을 선택해주세요!</p>
+        </div>
+        
+        <!--  -->
+        <div class="flex justify-center">
+            <img th:src="@{/images/nurung.png}" alt="Nurungi" class="w-32 h-32"/> <!-- 누렁이 이미지 경로 (예시) -->
+        </div>
+
+        <form th:action="@{/signup}" method="post" class="space-y-4">
+            <!-- 서버사이드 에러 메시지 표시 영역 -->
+            <div th:if="${#fields.hasGlobalErrors()}">
+                <div th:each="err : ${#fields.globalErrors()}" th:text="${err}" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg"></div>
+            </div>
+
+            <div>
+                <label for="username" class="sr-only">아이디</label>
+                <input id="username" name="username" type="text" required class="w-full p-3 bg-white rounded-lg border-2 border-amber-600 focus:border-amber-800 focus:outline-none placeholder-amber-500" placeholder="아이디">
+            </div>
+            <div>
+                <label for="password" class="sr-only">비밀번호</label>
+                <input id="password" name="password" type="password" required class="w-full p-3 bg-white rounded-lg border-2 border-amber-600 focus:border-amber-800 focus:outline-none placeholder-amber-500" placeholder="비밀번호">
+            </div>
+             <div>
+                <label for="passwordConfirm" class="sr-only">비밀번호 확인</label>
+                <input id="passwordConfirm" name="passwordConfirm" type="password" required class="w-full p-3 bg-white rounded-lg border-2 border-amber-600 focus:border-amber-800 focus:outline-none placeholder-amber-500" placeholder="비밀번호 확인">
+            </div>
+
+            <!-- 파벌 선택 -->
+            <fieldset class="pt-2">
+                <legend class="sr-only">서평 파벌 선택</legend>
+                <div class="flex justify-around">
+                    <div class="flex items-center">
+                        <input id="faction-dog" name="faction" type="radio" value="DOG" required class="h-4 w-4 text-amber-800 border-gray-300 focus:ring-amber-700">
+                        <label for="faction-dog" class="ml-3 block text-md font-bold text-amber-900">🐶 댕댕파</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input id="faction-cat" name="faction" type="radio" value="CAT" class="h-4 w-4 text-amber-800 border-gray-300 focus:ring-amber-700">
+                        <label for="faction-cat" class="ml-3 block text-md font-bold text-amber-900">🐱 냥냥파</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="w-full p-3 font-bold text-white bg-amber-800 rounded-lg hover:bg-amber-900 transition-colors mt-2">가입하기</button>
+        </form>
+        <div class="text-center">
+            <a th:href="@{/login}" class="font-medium text-amber-700 hover:text-amber-900">
+                이미 회원이신가요? 로그인
+            </a>
+        </div>
+    </div>
+</body>
+</html>

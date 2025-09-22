@@ -1,0 +1,115 @@
+<!-- 메인 -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>누렁이와 탱고의 비밀 서재</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        body { font-family: 'Pretendard', sans-serif; background-color: #FDF6E3; color: #654321; }
+        .card { background-color: #FFFBF0; border: 1px solid #D2B48C; }
+        .btn-like.liked { background-color: #FF6B6B; color: white; }
+    </style>
+</head>
+<body class="p-8">
+    <div class="max-w-6xl mx-auto">
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-4xl font-bold text-amber-800">비밀 서재</h1>
+            <div>
+                <span sec:authentication="name"></span>님 환영합니다!
+                 <a sec:authorize="hasRole('ADMIN')" href="/admin" class="ml-4 px-3 py-1 bg-amber-600 text-white rounded">관리자 페이지</a>
+                <a href="/members/logout" class="ml-4 px-3 py-1 bg-gray-500 text-white rounded">로그아웃</a>
+            </div>
+        </header>
+
+        <!-- 검색 폼 -->
+        <form th:action="@{/books}" method="get" class="mb-8 p-4 card rounded-lg flex gap-4">
+            <select name="searchType" class="border rounded p-2">
+                <option value="title">제목</option>
+                <option value="author">저자</option>
+            </select>
+            <input type="text" name="keyword" class="border rounded p-2 flex-grow" placeholder="검색어를 입력하세요">
+            <button type="submit" class="px-4 py-2 bg-amber-700 text-white rounded">검색</button>
+        </form>
+
+        <!-- 도서 목록 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div th:each="book : ${paging.content}" class="card rounded-lg p-6 shadow">
+                <h2 class="text-2xl font-bold" th:text="${book.title}">책 제목</h2>
+                <p class="text-gray-600 mb-4" th:text="${book.author}">저자</p>
+                
+                <!-- 서평 목록 -->
+                <div class="space-y-3">
+                     <div th:each="review : ${book.reviews}" class="bg-gray-50 p-3 rounded">
+                        <p th:text="${review.content}">서평 내용</p>
+                        <div class="text-xs text-right flex justify-end items-center mt-1">
+                            <span th:text="|작성자: ${review.member.username} (${review.member.faction.displayName})|"></span>
+                            <button th:data-review-id="${review.id}" 
+                                    th:classappend="${review.likedByCurrentUser} ? 'liked'"
+                                    class="btn-like ml-4 text-xs px-2 py-1 border rounded"
+                                    onclick="toggleLike(this)">
+                                👍 공감 <span th:text="${review.likeCount}">0</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 페이징 -->
+        <div th:if="${!paging.isEmpty()}" class="mt-8 flex justify-center items-center">
+            <ul class="flex">
+                <li th:if="${paging.hasPrevious()}">
+                    <a th:href="@{|/books?page=${paging.number-1}&searchType=${param.searchType}&keyword=${param.keyword}|}" class="px-3 py-1 border rounded-l">이전</a>
+                </li>
+                <li th:each="pageNumber : ${#numbers.sequence(0, paging.totalPages-1)}" th:if="${paging.totalPages > 1}">
+                     <a th:href="@{|/books?page=${pageNumber}&searchType=${param.searchType}&keyword=${param.keyword}|}" 
+                        th:text="${pageNumber + 1}" 
+                        class="px-3 py-1 border-t border-b"
+                        th:classappend="${pageNumber == paging.number} ? 'bg-amber-700 text-white' : ''"></a>
+                </li>
+                <li th:if="${paging.hasNext()}">
+                    <a th:href="@{|/books?page=${paging.number+1}&searchType=${param.searchType}&keyword=${param.keyword}|}" class="px-3 py-1 border rounded-r">다음</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+<script>
+async function toggleLike(button) {
+    const reviewId = button.getAttribute('data-review-id');
+    
+    try {
+        const response = await fetch(`/api/reviews/${reviewId}/like`, {
+            method: 'POST',
+            headers: {
+                // Spring Security는 CSRF 토큰을 요구할 수 있습니다. 
+                // 실제 프로젝트에서는 meta 태그에 토큰을 저장하고 헤더에 추가해야 합니다.
+                // 'X-CSRF-TOKEN': csrfToken 
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('서버 응답 오류');
+        }
+
+        const data = await response.json();
+        
+        // UI 업데이트
+        const likeCountSpan = button.querySelector('span');
+        likeCountSpan.textContent = data.likeCount;
+        
+        if (data.liked) {
+            button.classList.add('liked');
+        } else {
+            button.classList.remove('liked');
+        }
+
+    } catch (error) {
+        console.error('공감 처리 실패:', error);
+        alert('오류가 발생했습니다.');
+    }
+}
+</script>
+</body>
+</html>
