@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><title>탱고의 변칙 관리 시스템</title><script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto max-w-5xl p-8">
+        <header class="flex justify-between items-center mb-8">
+            <h1 class="text-4xl font-bold text-cyan-400">시공간 변칙 로그</h1>
+            <a th:href="@{/anomalies/new}" class="px-5 py-2 font-semibold text-gray-900 bg-cyan-400 rounded-md hover:bg-cyan-300 transition-colors">새 변칙 보고</a>
+        </header>
+        <main class="bg-gray-800 rounded-lg shadow-lg p-6">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="border-b border-gray-700">
+                        <th class="p-4">사건 ID</th><th class="p-4">변칙 현상</th><th class="p-4">위험 등급</th><th class="p-4">관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="anomaly : ${anomalies}" class="border-b border-gray-700 hover:bg-gray-700">
+                        <td class="p-4" th:text="${anomaly.id}"></td>
+                        <td class="p-4 font-semibold" th:text="${anomaly.name}"></td>
+                        <td class="p-4"><span th:text="${anomaly.riskLevel}" class="px-2 py-1 text-xs font-bold rounded-full" th:classappend="${anomaly.riskLevel == '재앙' ? 'bg-red-500 text-white' : 'bg-yellow-500 text-gray-900'}"></span></td>
+                        <td class="p-4"><a th:href="@{/anomalies/{id}/edit(id=${anomaly.id})}" class="text-cyan-400 hover:underline">수정</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+</html>
