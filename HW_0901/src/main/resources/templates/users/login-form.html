@@ -1,0 +1,39 @@
+<!-- /templates/users/login-form.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>연구소 로그인</title>
+    <!-- Common head content -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Noto+Sans+KR:wght@400;700&display=swap');
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .glassmorphism { background: rgba(31, 41, 55, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="bg-gray-800 text-white">
+<div th:replace="~{layout/header :: header}"></div>
+<div class="container mx-auto max-w-md p-8 mt-10 glassmorphism rounded-xl">
+    <h1 class="text-3xl font-bold text-center mb-6 text-teal-400 font-orbitron">연구소 로그인</h1>
+
+    <div th:if="${param.error}" class="bg-red-500/50 text-white p-3 rounded-md text-center mb-4">
+        아이디 또는 비밀번호가 올바르지 않습니다.
+    </div>
+
+    <form th:action="@{/login}" method="post" class="space-y-6">
+        <div>
+            <label for="username" class="block text-sm font-medium text-gray-300">연구원 ID</label>
+            <input type="text" id="username" name="username" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 text-white px-3 py-2" required>
+        </div>
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-300">비밀번호</label>
+            <input type="password" id="password" name="password" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 text-white px-3 py-2" required>
+        </div>
+        <button type="submit" class="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-300">로그인</button>
+    </form>
+</div>
+</body>
+</html>
