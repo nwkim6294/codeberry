@@ -1,0 +1,26 @@
+<!-- /templates/layout/header.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<header th:fragment="header" class="bg-black text-white sticky top-0 z-10 border-b border-gray-700">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a th:href="@{/}" class="text-2xl font-black tracking-wider text-yellow-400">FLEX CHALLENGE</a>
+        <nav class="flex items-center space-x-6">
+            <a th:href="@{/posts}" class="text-gray-300 hover:text-white">인증글 보기</a>
+            <div sec:authorize="isAnonymous()">
+                <a th:href="@{/users/login}" class="font-semibold text-gray-300 hover:text-white">로그인</a>
+                <a th:href="@{/users/signup}" class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-4 py-2 rounded">챌린지 참가</a>
+            </div>
+            <div sec:authorize="isAuthenticated()" class="flex items-center space-x-4">
+                <span class="font-semibold"><span sec:authentication="name"></span>님</span>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm font-bold">로그아웃</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+</header>
+</html>

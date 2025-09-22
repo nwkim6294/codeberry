@@ -1,0 +1,98 @@
+<!-- /templates/posts/detail.html 여기가 @RestController를 요구하는 영역임 -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${post.title}"></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<body class="bg-gray-900 text-white">
+<div th:replace="~{layout/header :: header}"></div>
+<main class="container mx-auto p-8 max-w-4xl">
+    <!-- Post Content -->
+    <div class="bg-black border border-gray-700 rounded-lg p-8">
+        <!-- 수정된 부분: postId를 전달하기 위한 hidden input 추가 -->
+        <input type="hidden" id="postId" th:value="${post.id}">
+
+        <p class="text-sm text-gray-400">도전자: <span th:text="${post.user.username}"></span></p>
+        <h1 class="text-4xl font-extrabold text-yellow-400 my-4" th:text="${post.title}"></h1>
+        <img th:src="@{/uploads/{filename}(filename=${post.imageFileName})}" class="w-full rounded-lg my-6">
+        <p class="text-lg text-gray-300 whitespace-pre-wrap" th:text="${post.content}"></p>
+        <div class="mt-6 text-right" th:if="${#authentication != null and #authentication.name == post.user.username}">
+             <a th:href="@{/posts/{id}/edit(id=${post.id})}" class="text-sm text-yellow-400 hover:text-yellow-300 font-semibold">이 글 수정하기</a>
+        </div>
+    </div>
+    <!-- Comments Section -->
+    <div class="mt-10">
+        <h2 class="text-2xl font-bold mb-4">댓글</h2>
+        <!-- Comment Form -->
+        <div sec:authorize="isAuthenticated()" class="mb-6">
+            <form id="commentForm" class="flex gap-2">
+                <input type="text" id="commentContent" placeholder="댓글을 입력하세요..." class="flex-grow p-3 bg-gray-800 border border-gray-600 rounded-lg focus:ring-yellow-500 focus:border-yellow-500 text-white" required>
+                <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 px-6 rounded-lg">등록</button>
+            </form>
+        </div>
+        <!-- Comment List -->
+        <div id="commentList" class="space-y-4">
+            <!-- Comments will be loaded here by JavaScript -->
+        </div>
+    </div>
+</main>
+<script th:inline="javascript">
+    const postId = document.getElementById('postId').value;
+    const commentList = document.getElementById('commentList');
+    const commentForm = document.getElementById('commentForm');
+    const commentContentInput = document.getElementById('commentContent');
+    
+    function createCommentHTML(comment) {
+        return `
+            <div class="bg-black border border-gray-700 p-4 rounded-lg">
+                <div class="flex items-center space-x-3">
+                    <span class="font-bold text-yellow-400">${comment.username}</span>
+                    <span class="text-xs text-gray-500">${comment.createdAt}</span>
+                </div>
+                <p class="mt-2 text-gray-300">${comment.content}</p>
+            </div>
+        `;
+    }
+
+    async function fetchComments() {
+        try {
+            const response = await fetch(`/api/posts/${postId}/comments`);
+            if (!response.ok) throw new Error('댓글을 불러오는데 실패했습니다.');
+            const comments = await response.json();
+            commentList.innerHTML = comments.map(createCommentHTML).join('');
+        } catch (error) {
+            commentList.innerHTML = `<p class="text-red-400">${error.message}</p>`;
+        }
+    }
+    
+    async function postComment(event) {
+        event.preventDefault();
+        const content = commentContentInput.value.trim();
+        if (!content) return;
+        
+        try {
+            const response = await fetch(`/api/posts/${postId}/comments`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: content })
+            });
+            if (!response.ok) throw new Error('댓글 등록에 실패했습니다.');
+            const newComment = await response.json();
+            commentList.insertAdjacentHTML('beforeend', createCommentHTML(newComment));
+            commentContentInput.value = '';
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchComments);
+    if(commentForm) {
+        commentForm.addEventListener('submit', postComment);
+    }
+</script>
+</body>
+</html>

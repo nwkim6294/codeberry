@@ -1,0 +1,40 @@
+<!-- /templates/posts/new-form.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>새 인증글 작성</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<body class="bg-gray-900 text-white">
+<div th:replace="~{layout/header :: header}"></div>
+<div class="container mx-auto max-w-2xl p-8 mt-10">
+    <div class="bg-black border border-gray-700 p-8 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-center mb-6 text-yellow-400">새 인증글 작성</h1>
+        <form th:action="@{/posts/new}" th:object="${postDto}" method="post" enctype="multipart/form-data" class="space-y-6">
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-300">인증 제목</label>
+                <input type="text" id="title" th:field="*{title}" class="mt-1 block w-full bg-gray-800 border-gray-600 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-white px-3 py-2">
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-red-400 text-xs mt-1"></p>
+            </div>
+            <div>
+                <label for="content" class="block text-sm font-medium text-gray-300">상세 내용</label>
+                <textarea id="content" th:field="*{content}" rows="6" class="mt-1 block w-full bg-gray-800 border-gray-600 rounded-md shadow-sm focus:ring-yellow-500 focus:border-yellow-500 text-white px-3 py-2"></textarea>
+                <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-red-400 text-xs mt-1"></p>
+            </div>
+            <div>
+                <label for="imageFile" class="block text-sm font-medium text-gray-300">인증 사진</label>
+                <input type="file" id="imageFile" name="imageFile" class="mt-1 block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-black hover:file:bg-yellow-500">
+                <p th:if="${#fields.hasErrors('imageFile')}" th:errors="*{imageFile}" class="text-red-400 text-xs mt-1"></p>
+            </div>
+            <div class="flex justify-end space-x-4 pt-4">
+                <a th:href="@{/posts}" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-5 rounded-lg">취소</a>
+                <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-5 rounded-lg">FLEX!</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
