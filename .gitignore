@@ -96,3 +96,13 @@ dist/
 logs/
 data/
 uploads/
+
+# Spring Boot config
+application.properties
+application.yml
+application-*.properties
+application-*.yml
+
+# 로컬 환경 변수 파일
+.env
+
