@@ -1,7 +1,5 @@
 # 🍓 codeberry
-
-이 레포지토리는 **FastAPI(Python)** 와 **Spring Boot(Java)** 두 가지 백엔드 스택을 기반으로 한 프로젝트들을 담고 있습니다.  
-각각의 프로젝트는 RESTful API와 Docker 환경을 통해 손쉽게 실행 및 배포할 수 있도록 구성되어 있습니다.
+이 레포지토리는 **FastAPI(Python)** 와 **Spring Boot(Java)** 두 가지 백엔드 스택을 활용한 **연습용 코드**들을 담고 있습니다. 
 
 ---
 
