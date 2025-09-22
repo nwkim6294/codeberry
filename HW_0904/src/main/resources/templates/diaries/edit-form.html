@@ -1,0 +1,50 @@
+<!-- /templates/diaries/edit-form.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>일기 수정</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100">
+<div th:replace="~{layout/header :: header}"></div>
+<div class="container mx-auto max-w-2xl p-8 mt-10 bg-white rounded-xl shadow-lg">
+    <h1 class="text-3xl font-bold text-center mb-8 text-slate-800">숙취 기록 수정</h1>
+    <form id="editForm" th:action="@{/diaries/{id}/edit(id=${diary.id})}" th:object="${form}" method="post" class="space-y-6">
+        <div class="text-center p-4 bg-teal-50 rounded-lg">
+             <p class="text-sm text-teal-800">증거 사진은 바꿀 수 없는 과거입니다.</p>
+        </div>
+        <div>
+            <label for="title" class="block text-sm font-medium text-gray-700">제목 (음주 종류)</label>
+            <input type="text" id="title" th:field="*{title}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500" required>
+        </div>
+        <div>
+            <label for="symptoms" class="block text-sm font-medium text-gray-700">주요 증상</label>
+            <textarea id="symptoms" th:field="*{symptoms}" rows="6" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500" required></textarea>
+        </div>
+        <div class="flex justify-between items-center pt-4">
+            <!-- 수정된 부분: form 대신 button 태그 사용 및 JS 함수 호출 -->
+            <button type="button" th:attr="data-diary-id=${diary.id}" onclick="deleteDiary(this.getAttribute('data-diary-id'))" class="text-sm text-red-500 hover:text-red-700 font-semibold bg-transparent border-none p-0 cursor-pointer">
+                이 기록 삭제하기
+            </button>
+            <div class="flex space-x-4">
+                <a th:href="@{/diaries}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-5 rounded-lg">취소</a>
+                <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-5 rounded-lg">수정 완료</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 추가된 부분: 삭제 로직을 처리하는 JavaScript -->
+<script>
+    function deleteDiary(diaryId) {
+        if (confirm('이 흑역사를 정말로 삭제하시겠습니까?')) {
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = `/diaries/${diaryId}/delete`;
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
+</body>
+</html>

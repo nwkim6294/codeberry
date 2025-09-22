@@ -1,0 +1,35 @@
+<!-- /templates/diaries/list.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>내 숙취일기</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100">
+<div th:replace="~{layout/header :: header}"></div>
+<main class="container mx-auto p-8">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold text-slate-800">나의 숙취 기록</h1>
+        <a th:href="@{/diaries/new}" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg">새로운 숙취 기록</a>
+    </div>
+    <div th:if="${#lists.isEmpty(diaries)}" class="text-center py-20 text-gray-500">
+        <p>기록된 숙취가 없습니다.</p>
+        <p>오늘은 상쾌한 하루를 보내셨나보네요!</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div th:each="diary : ${diaries}" class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img th:src="@{/uploads/{filename}(filename=${diary.imageFileName})}" class="w-full h-60 object-cover">
+            <div class="p-5">
+                <p class="text-sm text-gray-500" th:text="${#temporals.format(diary.sufferedDate, 'yyyy.MM.dd')}"></p>
+                <h2 class="text-2xl font-bold text-gray-800 mt-1" th:text="${diary.title}"></h2>
+                <p class="mt-3 text-gray-600 truncate" th:text="${diary.symptoms}"></p>
+                <div class="mt-4 text-right">
+                    <a th:href="@{/diaries/{id}/edit(id=${diary.id})}" class="text-sm text-teal-600 hover:text-teal-800 font-semibold">수정하기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
