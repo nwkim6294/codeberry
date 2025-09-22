@@ -1,0 +1,31 @@
+<!-- /templates/users/login-form.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<body class="bg-slate-100">
+<div th:replace="~{layout/header :: header}"></div>
+<div class="container mx-auto max-w-md p-8 mt-20 bg-white rounded-xl shadow-lg">
+    <h1 class="text-3xl font-bold text-center mb-6 text-slate-800">로그인</h1>
+    <div th:if="${param.error}" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        <span class="block sm:inline">아이디 또는 비밀번호가 올바르지 않습니다.</span>
+    </div>
+    <form th:action="@{/users/login}" method="post" class="space-y-6">
+        <div>
+            <label for="username" class="block text-sm font-medium text-gray-700">사용자 ID</label>
+            <input type="text" id="username" name="username" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500" required>
+        </div>
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
+            <input type="password" id="password" name="password" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500" required>
+        </div>
+        <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-4 rounded-lg">로그인</button>
+    </form>
+</div>
+</body>
+</html>

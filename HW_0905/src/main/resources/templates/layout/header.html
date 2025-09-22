@@ -1,0 +1,29 @@
+<!-- /templates/layout/header.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<header th:fragment="header" class="bg-white/90 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <a th:href="@{/}" class="text-2xl font-bold text-cyan-600 tracking-wider">SOOBOOKZ STORE</a>
+        <nav class="flex items-center space-x-6 text-sm font-semibold text-slate-600">
+            <a th:href="@{/stores}" class="hover:text-cyan-600 transition-colors">지점 안내</a>
+            <!-- TODO: 관리자(ADMIN)에게만 '관리자 페이지' 메뉴가 보이도록 하세요. -->
+            <a th:href="@{/admin}" sec:authorize="hasRole('ADMIN')" class="hover:text-cyan-600 transition-colors">관리자 페이지</a>
+
+            <div sec:authorize="isAnonymous()" class="flex items-center space-x-2">
+                <a th:href="@{/users/login}" class="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg transition-colors">로그인</a>
+                <a th:href="@{/users/signup}" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg transition-colors">회원가입</a>
+            </div>
+            <div sec:authorize="isAuthenticated()" class="flex items-center space-x-4">
+                <span class="text-slate-800"><span sec:authentication="name"></span>님</span>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg transition-colors text-sm font-semibold">로그아웃</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+</header>
+</html>

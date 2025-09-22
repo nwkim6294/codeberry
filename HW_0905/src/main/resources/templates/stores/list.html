@@ -1,0 +1,33 @@
+<!-- /templates/stores/list.html (손님용 지점 목록) -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>수북즈 팝업스토어</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<body class="bg-slate-50">
+<div th:replace="~{layout/header :: header}"></div>
+<main class="container mx-auto p-8">
+    <div class="text-center mb-16">
+        <h1 class="text-5xl font-extrabold text-slate-900">POP-UP STORES</h1>
+        <p class="text-slate-500 mt-3 text-lg">가까운 수북즈 팝업스토어를 방문해보세요!</p>
+    </div>
+    <div th:if="${#lists.isEmpty(stores)}" class="text-center py-20 text-gray-500">
+        <p>현재 운영 중인 팝업스토어가 없습니다.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div th:each="store : ${stores}" class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 group">
+            <a th:href="@{/stores/{id}(id=${store.id})}">
+                 <div class="p-6">
+                    <h2 class="text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors" th:text="${store.name}"></h2>
+                    <p class="text-sm text-slate-500 mt-1" th:text="${store.location}"></p>
+                </div>
+            </a>
+        </div>
+    </div>
+</main>
+</body>
+</html>

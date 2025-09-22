@@ -1,0 +1,68 @@
+<!-- /templates/admin/dashboard.html (관리자용 대시보드) -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 대시보드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<body class="bg-slate-100">
+<div th:replace="~{layout/header :: header}"></div>
+<main class="container mx-auto p-8">
+    <h1 class="text-4xl font-bold text-slate-800 mb-8">관리자 대시보드</h1>
+
+    <!-- 지점 관리 -->
+    <section class="bg-white p-6 rounded-lg shadow-md">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-semibold">지점 관리</h2>
+            <a th:href="@{/admin/stores/new}" class="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded-lg">새 지점 추가</a>
+        </div>
+        <table class="w-full text-left">
+            <thead>
+                <tr class="border-b">
+                    <th class="py-2">지점명</th>
+                    <th class="py-2">위치</th>
+                    <th class="py-2">상품 관리</th>
+                    <th class="py-2">작업</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="store : ${stores}" class="border-b">
+                    <td class="py-3" th:text="${store.name}"></td>
+                    <td class="py-3" th:text="${store.location}"></td>
+                    <td class="py-3">
+                         <a th:href="@{/admin/stores/{storeId}/items/new(storeId=${store.id})}" class="text-sm text-green-600 hover:text-green-800 font-semibold">상품 추가</a>
+                    </td>
+                    <td class="py-3">
+                        <form th:action="@{/admin/stores/{id}/delete(id=${store.id})}" method="post" onsubmit="return confirm('지점을 삭제하면 모든 상품 정보도 함께 삭제됩니다. 정말 삭제할까요?');">
+                            <button type="submit" class="text-sm text-red-500 hover:text-red-700 font-semibold">삭제</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    
+    <!-- 상품 목록 -->
+    <section class="mt-10" th:each="store : ${stores}">
+        <h3 class="text-xl font-semibold mb-4" th:text="${store.name} + ' 상품 목록'"></h3>
+         <div th:if="${#lists.isEmpty(store.items)}" class="text-gray-500 bg-white p-6 rounded-lg shadow-md">
+            이 지점에는 아직 등록된 상품이 없습니다.
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div th:each="item : ${store.items}" class="bg-white p-4 rounded-lg shadow-md relative">
+                <img th:src="@{/uploads/{filename}(filename=${item.imageFileName})}" class="w-full h-40 object-cover rounded mb-2">
+                <p class="font-bold" th:text="${item.name}"></p>
+                <p class="text-sm" th:text="${item.price} + '원'"></p>
+                <p class="text-xs text-gray-500">재고: <span th:text="${item.stock}"></span></p>
+                <form th:action="@{/admin/items/{itemId}/delete(itemId=${item.id})}" method="post" onsubmit="return confirm('이 상품을 삭제할까요?');" class="absolute top-2 right-2">
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 text-xs">&times;</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

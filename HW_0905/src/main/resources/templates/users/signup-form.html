@@ -1,0 +1,28 @@
+<!-- /templates/users/signup-form.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<body class="bg-slate-100">
+<div th:replace="~{layout/header :: header}"></div>
+<div class="container mx-auto max-w-md p-8 mt-20 bg-white rounded-xl shadow-lg">
+    <h1 class="text-3xl font-bold text-center mb-6 text-slate-800">회원가입</h1>
+    <form th:action="@{/users/signup}" th:object="${user}" method="post" class="space-y-6">
+        <div>
+            <label for="username" class="block text-sm font-medium text-gray-700">사용자 ID</label>
+            <input type="text" id="username" th:field="*{username}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500" required>
+        </div>
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
+            <input type="password" id="password" th:field="*{password}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500" required>
+        </div>
+        <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-4 rounded-lg">가입하기</button>
+    </form>
+</div>
+</body>
+</html>
