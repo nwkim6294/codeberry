@@ -96,6 +96,7 @@ dist/
 logs/
 data/
 uploads/
+<<<<<<< Upstream, based on origin/main
 
 # Spring Boot config
 application.properties
@@ -105,4 +106,3 @@ application-*.yml
 
 # 로컬 환경 변수 파일
 .env
-
