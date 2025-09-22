@@ -1,0 +1,38 @@
+<!-- /resources/templates/memories/list.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><title>누렁이의 기억 맛집 수첩</title><script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Poor Story', cursive; } </style>
+</head>
+<body class="bg-[#FFF8E1]">
+    <div class="container mx-auto max-w-3xl p-8">
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-bold text-[#D2691E]">누렁이의 기억 맛집 수첩</h1>
+            <p class="text-gray-600 text-lg mt-2">오늘 맛본 기억은 어땠어?</p>
+        </header>
+        <div class="text-right mb-6">
+            <a th:href="@{/memories/new}" class="px-6 py-3 text-lg font-semibold text-white bg-[#FFA726] rounded-full shadow-lg hover:bg-[#FB8C00] transition-colors">
+                새 기억 맛보기
+            </a>
+        </div>
+        <main class="space-y-5">
+            <div th:each="memory : ${memories}" class="bg-white p-6 rounded-2xl shadow-md border-4 border-dashed border-yellow-300">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800" th:text="${memory.source}">기억의 출처</h2>
+                    <div class="flex items-center text-2xl text-yellow-500">
+                        <span th:each="star : ${#numbers.sequence(1, memory.rating)}">★</span>
+                        <span th:each="star : ${#numbers.sequence(1, 5 - memory.rating)}">☆</span>
+                    </div>
+                </div>
+                <p class="text-lg text-gray-600 mt-3" th:text="${memory.taste}">맛에 대한 묘사</p>
+                <div class="text-right mt-4">
+                    <a th:href="@{/memories/{id}/edit(id=${memory.id})}" class="text-sm text-blue-600 hover:underline">수정하기</a>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+
