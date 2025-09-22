@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ogu's Secret Dream Workshop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+        }
+        .glow-text {
+            text-shadow: 0 0 8px rgba(139, 92, 246, 0.8);
+        }
+        .glass-card {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px 0 rgba(139, 92, 246, 0.1);
+        }
+        .btn-primary {
+            background-color: #8B5CF6;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #7C3AED;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.7);
+        }
+        .form-input {
+            background-color: rgba(15, 23, 42, 0.8);
+            border: 1px solid #4A5568;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #8B5CF6;
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.5);
+        }
+    </style>
+</head>
+<body class="w-full min-h-screen flex items-center justify-center p-4 bg-cover bg-center" style="background-image: url('https://placehold.co/1920x1080/1a1a2e/e0e0e0?text=Cosmic+Background');">
+
+    <div class="w-full max-w-4xl mx-auto">
+        <header class="text-center mb-10">
+            <h1 class="text-5xl font-bold glow-text text-violet-300">Ogu's Secret Dream Workshop</h1>
+            <p class="text-lg text-gray-400 mt-2">아기 오구의 접근을 막아라! 코드 실시간 검증 시스템</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Code Validator -->
+            <section class="glass-card p-8">
+                <h2 class="text-2xl font-semibold mb-6 text-violet-300 glow-text">꿈 활성화 코드 검증</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="activationCode" class="block text-sm font-medium text-gray-300 mb-2">활성화 코드 입력:</label>
+                        <div class="flex items-center space-x-3">
+                            <input type="text" id="activationCode" name="activationCode" class="form-input block w-full rounded-md shadow-sm py-2 px-3 focus:ring-violet-500" placeholder="e.g., COSMIC-WAVE-777">
+                            <button onclick="checkCode()" class="btn-primary font-bold py-2 px-4 rounded-md whitespace-nowrap">코드 확인</button>
+                        </div>
+                    </div>
+                    <div id="check-result" class="mt-2 text-sm h-5">
+                        <!-- API 응답 결과가 여기에 표시됩니다 -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unassigned Fragments -->
+            <section class="glass-card p-8">
+                <h2 class="text-2xl font-semibold mb-6 text-violet-300 glow-text">미사용 꿈의 조각 목록</h2>
+                <div class="h-64 overflow-y-auto pr-2">
+                  <ul th:if="${!unassignedFragments.isEmpty()}" class="space-y-3">
+                        <li th:each="fragment : ${unassignedFragments}" 
+                            class="bg-slate-800 p-3 rounded-md border border-slate-700">
+                            <p class="text-gray-200" th:text="${fragment.content}"></p>
+                        </li>
+                    </ul>
+                    <p th:if="${unassignedFragments.isEmpty()}" class="text-gray-400">사용 가능한 꿈의 조각이 없습니다.</p>
+                </div>
+                 <form th:action="@{/workshop/find-fragments}" method="post" class="mt-4">
+                    <button type="submit" class="w-full btn-primary font-bold py-2 px-4 rounded-md">
+                        미사용 조각 새로고침
+                    </button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        async function checkCode() {
+            const activationCodeInput = document.getElementById('activationCode');
+            const code = activationCodeInput.value;
+            const resultDiv = document.getElementById('check-result');
+
+            if (!code.trim()) {
+                resultDiv.textContent = '코드를 입력해주세요.';
+                resultDiv.className = 'text-yellow-400';
+                return;
+            }
+
+            // 이전 결과 메시지 초기화
+            resultDiv.textContent = '확인 중...';
+            resultDiv.className = 'text-gray-400';
+            
+            try {
+                // REST API 호출
+                const response = await fetch('/api/projects/check-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ activationCode: code }),
+                });
+
+                if (!response.ok) {
+                    throw new Error('서버와 통신에 실패했습니다.');
+                }
+
+                const data = await response.json();
+
+                if (data.exists) {
+                    resultDiv.textContent = '이미 사용 중인 코드입니다!';
+                    resultDiv.className = 'text-red-400 font-bold';
+                } else {
+                    // 실제 애플리케이션에서는 이렇게 반환하지 않지만, 예제 설명을 위해 추가합니다.
+                    // 보통은 "사용 가능한 코드입니다" 와 같이 긍정 메시지를 보냅니다.
+                    // 여기서는 "존재하지 않는 코드"가 아기오구의 입력을 막는 긍정적 신호입니다.
+                    resultDiv.textContent = '존재하지 않는 코드입니다. (방어 성공!)';
+                    resultDiv.className = 'text-green-400 font-bold';
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.textContent = '오류가 발생했습니다. 다시 시도해주세요.';
+                resultDiv.className = 'text-red-500';
+            }
+        }
+    </script>
+
+</body>
+</html>
