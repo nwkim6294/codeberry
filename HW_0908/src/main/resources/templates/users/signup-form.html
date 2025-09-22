@@ -1,0 +1,26 @@
+<!-- /templates/users/signup-form.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>탐지견 등록</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div th:replace="~{layout/header :: header}"></div>
+<div class="container mx-auto max-w-md p-8 mt-20 bg-white rounded-xl shadow-lg">
+    <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">탐지견 등록</h1>
+    <form th:action="@{/users/signup}" th:object="${user}" method="post" class="space-y-6">
+        <div>
+            <label for="username" class="block text-sm font-medium text-gray-700">탐지견 이름</label>
+            <input type="text" id="username" th:field="*{username}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
+            <input type="password" id="password" th:field="*{password}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg">등록하기</button>
+    </form>
+</div>
+</body>
+</html>

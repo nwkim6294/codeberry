@@ -1,0 +1,24 @@
+<!-- /templates/layout/header.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header th:fragment="header" class="bg-gray-800 text-white shadow-md sticky top-0 z-10">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <a th:href="@{/}" class="text-2xl font-bold">탐지견 사건파일 시스템</a>
+        <nav class="flex items-center space-x-5">
+            <a th:href="@{/cases/archive}" class="hover:text-gray-300">사건 아카이브</a>
+            <a th:href="@{/cases/my-cases}" sec:authorize="isAuthenticated()" class="hover:text-gray-300">내 사건파일</a>
+            
+            <div sec:authorize="isAnonymous()">
+                <a th:href="@{/users/login}" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md">로그인</a>
+                <a th:href="@{/users/signup}" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md">탐지견 등록</a>
+            </div>
+            <div sec:authorize="isAuthenticated()" class="flex items-center space-x-4">
+                <span class="font-semibold"><span sec:authentication="name"></span> 탐지견님</span>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md">로그아웃</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+</header>
+</html>s

@@ -1,0 +1,38 @@
+<!-- /templates/cases/edit-form.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>사건 파일 수정</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<div th:replace="~{layout/header :: header}"></div>
+<div class="container mx-auto max-w-2xl p-8 mt-10 bg-white rounded-xl shadow-lg">
+    <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">사건 파일 수정</h1>
+    <form th:action="@{/cases/{id}/edit(id=${caseFile.id})}" th:object="${caseFile}" method="post" class="space-y-6">
+        <div class="text-center p-4 bg-blue-50 rounded-lg">
+             <p class="text-sm text-blue-800">증거 사진은 변경할 수 없습니다.</p>
+        </div>
+        <div>
+            <label for="caseName" class="block text-sm font-medium text-gray-700">사건명</label>
+            <input type="text" id="caseName" th:field="*{caseName}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <div>
+            <label for="description" class="block text-sm font-medium text-gray-700">사건 내용</label>
+            <textarea id="description" th:field="*{description}" rows="6" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required></textarea>
+        </div>
+        <div class="flex justify-between items-center pt-4">
+            <!-- 사건 종결 버튼 -->
+            <form th:action="@{/cases/{id}/close(id=${caseFile.id})}" method="post" onsubmit="return confirm('이 사건을 정말로 종결하시겠습니까?');">
+                 <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-5 rounded-lg">사건 종결</button>
+            </form>
+            <div class="flex space-x-4">
+                <a th:href="@{/cases/my-cases}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-5 rounded-lg">취소</a>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg">수정 완료</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
