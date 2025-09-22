@@ -1,0 +1,51 @@
+<!-- src/main/resources/templates/parcels/list.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>급하냥의 초차원 소포 관리</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen font-mono p-8">
+    <div class="w-full max-w-6xl mx-auto bg-gray-800 rounded-xl shadow-lg border border-cyan-500 p-8">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-cyan-400">초차원 소포 목록</h1>
+                <p class="text-gray-400">1나노초의 오차도 용납하지 않는다냥!</p>
+            </div>
+            <a th:href="@{/parcels/new}" class="px-5 py-2 text-sm font-bold text-gray-900 bg-cyan-400 rounded-md hover:bg-cyan-300">새 소포 접수</a>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="min-w-full">
+                <thead class="border-b border-gray-600">
+                    <tr>
+                        <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase">ID</th>
+                        <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase">수신인</th>
+                        <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase">목적지</th>
+                        <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase">상태</th>
+                        <th class="py-3 px-4 text-left text-xs font-medium text-gray-400 uppercase">관리</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700">
+                    <tr th:each="parcel : ${parcels}" class="hover:bg-gray-700">
+                        <td class="py-4 px-4 text-sm" th:text="${parcel.id}">1</td>
+                        <td class="py-4 px-4 text-sm font-medium text-cyan-400" th:text="${parcel.receiver}">티라노사우루스</td>
+                        <td class="py-4 px-4 text-sm" th:text="${parcel.destination}">쥐라기 시대</td>
+                        <td class="py-4 px-4 text-sm">
+                            <span th:text="${parcel.status.description}"
+                                  th:classappend="${parcel.status.name() == 'PENDING'} ? 'text-yellow-400' : (${parcel.status.name() == 'IN_TRANSIT'} ? 'text-blue-400' : 'text-green-400')"
+                                  class="font-bold">배송 상태</span>
+                        </td>
+                        <td class="py-4 px-4 text-sm">
+                            <a th:href="@{/parcels/{id}/edit(id=${parcel.id})}" class="text-indigo-400 hover:text-indigo-300">상태 변경</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(parcels)}">
+                         <td colspan="5" class="text-center py-10 text-gray-500">접수된 소포가 없다냥! 어서 일해라냥!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
