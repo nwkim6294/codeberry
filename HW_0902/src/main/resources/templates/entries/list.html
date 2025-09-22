@@ -1,0 +1,40 @@
+<!-- /templates/entries/list.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>내 비밀 일기 목록</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss-line-clamp@1.1.2/dist/line-clamp.min.css" rel="stylesheet">
+</head>
+<body class="bg-pink-50">
+<div th:replace="~{layout/header :: header}"></div>
+<main class="container mx-auto p-8">
+    <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-pink-500 font-serif">나의 비밀 이야기</h1>
+        <p class="text-gray-500 mt-2">소중한 감정들을 다시 만나보세요.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Entry Card -->
+        <div th:each="entry : ${entries}" class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transform hover:-translate-y-1 transition-transform duration-300">
+            <div class="p-6 flex-grow">
+                <p class="text-sm text-gray-400" th:text="${#temporals.format(entry.createdAt, 'yyyy.MM.dd')}"></p>
+                <h2 class="text-2xl font-bold mt-2 text-gray-800" th:text="${entry.title}"></h2>
+                <p class="mt-4 text-gray-600 line-clamp-3" th:text="${entry.content}"></p>
+            </div>
+            <div class="p-4 bg-gray-50 flex justify-end">
+                <a th:href="@{/entries/{id}/edit(id=${entry.id})}" class="text-sm text-pink-500 hover:text-pink-600 font-semibold">수정하기</a>
+            </div>
+        </div>
+        <!-- Empty State -->
+        <div th:if="${#lists.isEmpty(entries)}" class="col-span-full text-center py-20">
+             <div class="bg-white/70 backdrop-blur-sm p-12 rounded-2xl shadow-lg inline-block">
+                <p class="text-gray-500 text-lg">아직 작성한 일기가 없어요.</p>
+                <p class="text-gray-600 mt-2">오늘의 감정을 기록해보는 건 어떨까요?</p>
+                <a th:href="@{/entries/new}" class="mt-6 inline-block bg-pink-400 hover:bg-pink-500 text-white px-6 py-2 rounded-full font-semibold transition-transform transform hover:scale-105">첫 일기 쓰러가기</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

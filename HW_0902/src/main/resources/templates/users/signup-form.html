@@ -1,0 +1,29 @@
+<!-- /templates/users/signup-form.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀 일기장 회원가입</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-50">
+<div th:replace="~{layout/header :: header}"></div>
+<div class="container mx-auto max-w-md p-8 mt-20 bg-white rounded-2xl shadow-lg">
+    <h1 class="text-3xl font-bold text-center mb-6 text-pink-500 font-serif">회원가입</h1>
+    <form th:action="@{/keepers/signup}" th:object="${keeper}" method="post" class="space-y-6">
+        <div>
+            <label for="username" class="block text-sm font-medium text-gray-700">사용자 ID</label>
+            <input type="text" id="username" th:field="*{username}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-400 focus:border-pink-400" required>
+        </div>
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
+            <input type="password" id="password" th:field="*{password}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-400 focus:border-pink-400" required>
+        </div>
+        <button type="submit" class="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-3 px-4 rounded-full transition-colors duration-300">가입하기</button>
+        <p class="text-center text-sm text-gray-500">
+            이미 계정이 있으신가요? <a th:href="@{/keepers/login}" class="font-medium text-pink-500 hover:text-pink-600">로그인</a>
+        </p>
+    </form>
+</div>
+</body>
+</html>

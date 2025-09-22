@@ -1,0 +1,22 @@
+<!-- /templates/index.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>토심이의 비밀 일기장</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-50">
+<div th:replace="~{layout/header :: header}"></div>
+<main class="container mx-auto p-8 flex flex-col items-center justify-center text-center" style="height: calc(100vh - 80px);">
+    <div class="bg-white/70 backdrop-blur-sm p-12 rounded-2xl shadow-lg">
+        <h1 class="text-5xl font-bold text-pink-500 font-serif">비밀스러운 공간에 오신 것을 환영해요</h1>
+        <p class="text-gray-600 mt-4 max-w-lg">이곳은 당신의 소중한 감정들을 안전하게 보관하는 곳입니다. <br>오늘의 이야기를 남겨보세요.</p>
+        <div class="mt-8">
+            <a sec:authorize="isAnonymous()" th:href="@{/keepers/login}" class="bg-pink-400 hover:bg-pink-500 text-white px-8 py-3 rounded-full font-semibold text-lg transition-transform transform hover:scale-105">일기장 시작하기</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/entries}" class="bg-pink-400 hover:bg-pink-500 text-white px-8 py-3 rounded-full font-semibold text-lg transition-transform transform hover:scale-105">내 일기 보러가기</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>
