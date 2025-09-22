@@ -6,7 +6,7 @@
 ---
 
 ## 📂 프로젝트 구조
-├── fastapt_web/ # FastAPI + SQL + Docker 기반
-├── project/ # Python FastAPI 실습/응용
-├── HW_/ # Spring + RESTful API 실습
+├── fastapt_web/   # FastAPI + SQL + Docker 기반
+├── project/       # Python FastAPI 실습/응용
+├── HW_/           # Spring + RESTful API 실습
 └── README.md
