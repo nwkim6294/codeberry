@@ -1,0 +1,46 @@
+<!-- /templates/users/signup-form.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>요원 등록</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin 
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<body class="bg-gray-800 text-white">
+<div th:replace="~{layout/header :: header}"></div>
+<div class="container mx-auto max-w-md p-8 mt-20 bg-gray-900/50 rounded-xl shadow-lg border border-gray-700">
+    <h1 class="text-3xl font-bold text-center mb-6 text-cyan-400">신규 요원 등록</h1>
+    <form th:action="@{/users/signup}" th:object="${agent}" method="post" class="space-y-6">
+        <div>
+            <label for="username" class="block text-sm font-medium text-gray-300">호출명 (ID)</label>
+            <input type="text" id="username" th:field="*{username}" 
+                   class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm 
+                          focus:ring-cyan-500 focus:border-cyan-500 text-white px-3 py-2" required>
+        </div>
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-300">암호</label>
+            <input type="password" id="password" th:field="*{password}" 
+                   class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm 
+                          focus:ring-cyan-500 focus:border-cyan-500 text-white px-3 py-2" required>
+        </div>
+        <div>
+            <label for="role" class="block text-sm font-medium text-gray-300">역할 선택</label>
+            <select id="role" th:field="*{role}" 
+                    class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm 
+                           focus:ring-cyan-500 focus:border-cyan-500 text-white px-3 py-2" required>
+                <option value="">역할을 선택하세요</option>
+                <option value="AGENT">요원 (Agent)</option>
+                <option value="MANAGER">지휘관 (Manager)</option>
+            </select>
+        </div>
+        <button type="submit" 
+                class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-4 rounded-lg">
+            등록 완료
+        </button>
+    </form>
+</div>
+</body>
+</html>

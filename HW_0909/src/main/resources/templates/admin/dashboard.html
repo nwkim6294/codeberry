@@ -1,0 +1,45 @@
+<!-- /templates/admin/dashboard.html (지휘관용) -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>지휘통제실</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<body class="bg-gray-800 text-white">
+<div th:replace="~{layout/header :: header}"></div>
+<main class="container mx-auto p-8">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold text-cyan-400">지휘통제실 - 전체 임무 현황</h1>
+        <a th:href="@{/admin/missions/new}" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg">새 임무 생성</a>
+    </div>
+    <div class="bg-gray-900/50 border border-gray-700 rounded-lg shadow-lg">
+        <table class="w-full text-left">
+            <thead class="border-b border-gray-700">
+                <tr>
+                    <th class="p-4">요원</th>
+                    <th class="p-4">임무명</th>
+                    <th class="p-4">장소</th>
+                    <th class="p-4">상태</th>
+                    <th class="p-4">증거</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="mission : ${missions}" class="border-b border-gray-800">
+                    <td class="p-4" th:text="${mission.agent.username}"></td>
+                    <td class="p-4" th:text="${mission.missionName}"></td>
+                    <td class="p-4" th:text="${mission.location}"></td>
+                    <td class="p-4 font-semibold" th:text="${mission.status.name()}"
+                        th:classappend="${mission.status.name() == 'ASSIGNED' ? 'text-yellow-400' : 'text-green-400'}"></td>
+                    <td class="p-4">
+                        <a th:if="${mission.evidencePhotoName != null}" th:href="@{/uploads/{filename}(filename=${mission.evidencePhotoName})}" target="_blank" class="text-cyan-400 hover:underline">보기</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

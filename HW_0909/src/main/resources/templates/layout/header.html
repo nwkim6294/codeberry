@@ -1,0 +1,28 @@
+<!-- /templates/layout/header.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<header th:fragment="header" class="bg-gray-900 text-gray-200 shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <a th:href="@{/}" class="text-2xl font-bold tracking-wider text-cyan-400">B.E.A.N.</a>
+        <nav class="flex items-center space-x-6 text-sm font-semibold">
+            <a th:href="@{/missions/my-missions}" sec:authorize="hasRole('AGENT')" class="hover:text-cyan-400 transition-colors">내 임무</a>
+            <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('MANAGER')" class="hover:text-cyan-400 transition-colors">지휘통제실</a>
+            
+            <div sec:authorize="isAnonymous()" class="flex items-center space-x-2">
+                <a th:href="@{/users/login}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg transition-colors">로그인</a>
+                <a th:href="@{/users/signup}" class="bg-gray-700 hover:bg-gray-600 text-gray-200 px-4 py-2 rounded-lg transition-colors">요원 등록</a>
+            </div>
+            <div sec:authorize="isAuthenticated()" class="flex items-center space-x-4">
+                <span class="text-white"><span sec:authentication="name"></span> 요원</span>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="bg-gray-700 hover:bg-gray-600 text-gray-200 px-4 py-2 rounded-lg transition-colors text-sm font-semibold">로그아웃</button>
+                </form>
+            </div>
+        </nav>
+    </div>
+</header>
+</html>

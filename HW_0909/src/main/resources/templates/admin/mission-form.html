@@ -1,0 +1,42 @@
+<!-- /templates/admin/mission-form.html (지휘관용) -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>새 임무 생성</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<body class="bg-gray-800 text-white">
+<div th:replace="~{layout/header :: header}"></div>
+<div class="container mx-auto max-w-2xl p-8 mt-10 bg-gray-900/50 rounded-xl shadow-lg border border-gray-700">
+    <h1 class="text-3xl font-bold text-center mb-8 text-cyan-400">새 임무 생성 및 할당</h1>
+    <form th:action="@{/admin/missions/new}" th:object="${mission}" method="post" class="space-y-6">
+        <div>
+            <label for="missionName" class="block text-sm font-medium text-gray-300">임무명</label>
+            <input type="text" id="missionName" th:field="*{missionName}" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-white px-3 py-2" required>
+        </div>
+        <div>
+            <label for="location" class="block text-sm font-medium text-gray-300">임무 지역</label>
+            <input type="text" id="location" th:field="*{location}" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-white px-3 py-2" required>
+        </div>
+        <div>
+            <label for="description" class="block text-sm font-medium text-gray-300">임무 내용</eiv>
+            <textarea id="description" th:field="*{description}" rows="5" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-white px-3 py-2" required></textarea>
+        </div>
+        <div>
+            <label for="agentId" class="block text-sm font-medium text-gray-300">담당 요원</label>
+            <select id="agentId" name="agentId" class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500 text-white px-3 py-2" required>
+                <option value="">요원을 선택하세요</option>
+                <option th:each="agent : ${agents}" th:value="${agent.id}" th:text="${agent.username}"></option>
+            </select>
+        </div>
+        <div class="flex justify-end space-x-4 pt-4">
+            <a th:href="@{/admin/dashboard}" class="bg-gray-600 hover:bg-gray-700 text-gray-200 font-semibold py-2 px-5 rounded-lg">취소</a>
+            <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-5 rounded-lg">임무 할당</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

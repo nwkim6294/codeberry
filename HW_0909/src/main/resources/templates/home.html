@@ -1,0 +1,23 @@
+<!-- /templates/home.html -->
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>B.E.A.N. 임무 관리 시스템</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <style> body { font-family: 'Pretendard', sans-serif; } </style>
+</head>
+<body class="bg-gray-800 text-white">
+<div th:replace="~{layout/header :: header}"></div>
+<main class="container mx-auto p-8 flex items-center justify-center" style="height: calc(100vh - 68px);">
+    <div class="text-center">
+        <h1 class="text-6xl font-extrabold text-cyan-400">MISSION CONTROL</h1>
+        <p class="text-gray-400 mt-4 text-lg">시공간의 맛을 수호하는 엘리트 요원, 바티스타를 위한 시스템.</p>
+        <div class.mt-10>
+            <a th:href="@{/users/login}" class="mt-8 inline-block bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-4 px-8 rounded-full text-xl transition-transform transform hover:scale-105">임무 브리핑 시작</a>
+        </div>
+    </div>
+</main>
+</body>
+</html>
