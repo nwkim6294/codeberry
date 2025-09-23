@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 프로필 - SECRET CLUB</title>
+    <link rel="stylesheet" href="/css/club-common.css">
+</head>
+<body>
+    <nav class="club-nav">
+        <div class="nav-content">
+            <div class="nav-logo">👤 SECRET CLUB</div>
+            <div class="nav-links">
+                <span class="nav-user" sec:authentication="name"></span>
+                <a href="/club/logout" class="club-link">로그아웃</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="background-particles" id="particles"></div>
+    
+    <div class="club-container" style="padding-top: 100px;">
+        <div class="club-card" style="max-width: 700px;">
+            <h1 class="club-logo neon-text">👤 내 프로필</h1>
+            
+            <!-- 사용자 정보 -->
+            <div style="text-align: center; margin: 2rem 0;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">🕵️‍♂️</div>
+                <h2 style="color: var(--neon-blue); margin-bottom: 0.5rem;" sec:authentication="name"></h2>
+                <p style="color: var(--gray-text);">SECRET CLUB 회원</p>
+            </div>
+
+            <!-- 회원 정보 카드 -->
+            <div style="background: rgba(0,255,255,0.1); border: 2px solid var(--neon-blue); border-radius: 15px; padding: 2rem; margin: 2rem 0;">
+                <h3 style="color: var(--neon-blue); margin-bottom: 1.5rem; text-align: center;">회원 정보</h3>
+                
+                <div style="display: grid; gap: 1rem;">
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <span style="color: var(--gray-text);">사용자명:</span>
+                        <span style="color: var(--white-text); font-weight: 600;" sec:authentication="name">username</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <span style="color: var(--gray-text);">권한:</span>
+                        <span style="color: var(--neon-purple); font-weight: 600;">
+                            <span sec:authorize="hasRole('ADMIN')" style="color: var(--error-red);">👑 관리자</span>
+                            <span sec:authorize="hasRole('VIP') and !hasRole('ADMIN')" style="color: var(--neon-purple);">⭐ VIP 회원</span>
+                            <span sec:authorize="hasRole('USER') and !hasRole('VIP')" style="color: var(--neon-blue);">👤 일반 회원</span>
+                        </span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
+                        <span style="color: var(--gray-text);">가입일:</span>
+                        <span style="color: var(--white-text);" th:text="${user?.createdAt ? #temporals.format(user.createdAt, 'yyyy-MM-dd') : '정보 없음'}">가입일</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 활동 통계 -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 2rem 0;">
+                <div style="background: rgba(255,0,128,0.1); padding: 1.5rem; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 2rem; color: var(--neon-pink); margin-bottom: 0.5rem;">🔐</div>
+                    <div style="color: var(--white-text); font-size: 1.5rem; font-weight: 700;">15</div>
+                    <div style="color: var(--gray-text); font-size: 0.9rem;">로그인 횟수</div>
+                </div>
+                
+                <div style="background: rgba(0,255,255,0.1); padding: 1.5rem; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 2rem; color: var(--neon-blue); margin-bottom: 0.5rem;">🎮</div>
+                    <div style="color: var(--white-text); font-size: 1.5rem; font-weight: 700;">7</div>
+                    <div style="color: var(--gray-text); font-size: 0.9rem;">게임 플레이</div>
+                </div>
+                
+                <div style="background: rgba(128,0,255,0.1); padding: 1.5rem; border-radius: 10px; text-align: center;">
+                    <div style="font-size: 2rem; color: var(--neon-purple); margin-bottom: 0.5rem;">🏆</div>
+                    <div style="color: var(--white-text); font-size: 1.5rem; font-weight: 700;">3</div>
+                    <div style="color: var(--gray-text); font-size: 0.9rem;">획득 배지</div>
+                </div>
+            </div>
+
+            <!-- 액션 버튼들 -->
+            <div style="display: flex; gap: 1rem; justify-content: center; margin: 2rem 0;">
+                <button class="club-btn" onclick="alert('프로필 수정 기능 준비 중입니다! ✏️')" style="background: var(--neon-blue);">
+                    프로필 수정
+                </button>
+                <button class="club-btn" onclick="alert('비밀번호 변경 기능 준비 중입니다! 🔒')" style="background: var(--neon-purple);">
+                    비밀번호 변경
+                </button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/club/main" class="club-btn">메인으로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                
+                const colors = ['#ff0080', '#00ffff', '#8000ff'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', createParticles);
+        
+        // 프로필 로딩 애니메이션
+        setTimeout(() => {
+            const profileCard = document.querySelector('.club-card');
+            profileCard.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                profileCard.style.transform = 'scale(1)';
+            }, 200);
+        }, 500);
+    </script>
+</body>
+</html>

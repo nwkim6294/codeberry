@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게임 존 - SECRET CLUB</title>
+    <link rel="stylesheet" href="/css/club-common.css">
+</head>
+<body>
+    <nav class="club-nav">
+        <div class="nav-content">
+            <div class="nav-logo">🎮 SECRET CLUB</div>
+            <div class="nav-links">
+                <span class="nav-user" sec:authentication="name"></span>
+                <a href="/club/logout" class="club-link">로그아웃</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="background-particles" id="particles"></div>
+    
+    <div class="club-container" style="padding-top: 100px;">
+        <div class="club-card" style="max-width: 900px;">
+            <h1 class="club-logo neon-text">🎮 게임 존</h1>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <h2 style="color: var(--neon-purple);">Spring Security 학습 게임!</h2>
+                <p style="color: var(--gray-text);">재미있게 보안을 배워보세요.</p>
+            </div>
+
+            <!-- 게임 목록 -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                <div style="background: rgba(255,0,128,0.1); border: 2px solid var(--neon-pink); padding: 2rem; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔐</div>
+                    <h4 style="color: var(--neon-pink); margin-bottom: 1rem;">비밀번호 마스터</h4>
+                    <p style="color: var(--gray-text); margin-bottom: 1.5rem;">강력한 비밀번호 만들기 게임</p>
+                    <button class="club-btn" onclick="alert('게임 준비 중입니다! 🎮')">게임 시작</button>
+                </div>
+                
+                <div style="background: rgba(0,255,255,0.1); border: 2px solid var(--neon-blue); padding: 2rem; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🛡️</div>
+                    <h4 style="color: var(--neon-blue); margin-bottom: 1rem;">보안 퀴즈</h4>
+                    <p style="color: var(--gray-text); margin-bottom: 1.5rem;">Spring Security 지식 테스트</p>
+                    <button class="club-btn" onclick="alert('퀴즈 준비 중입니다! 📚')">퀴즈 시작</button>
+                </div>
+                
+                <div style="background: rgba(128,0,255,0.1); border: 2px solid var(--neon-purple); padding: 2rem; border-radius: 15px; text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                    <h4 style="color: var(--neon-purple); margin-bottom: 1rem;">권한 미로</h4>
+                    <p style="color: var(--gray-text); margin-bottom: 1.5rem;">역할 기반 접근 제어 게임</p>
+                    <button class="club-btn" onclick="alert('미로 생성 중입니다! 🗺️')">도전하기</button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/club/main" class="club-btn">메인으로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 40;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+                
+                const colors = ['#ff0080', '#00ffff', '#8000ff'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
+</body>
+</html>

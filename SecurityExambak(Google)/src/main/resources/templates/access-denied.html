@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>잘못와쓰요</title>
+    <link rel="stylesheet" href="/css/club-common.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚫</text></svg>">
+    <style>
+        .access-denied-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .denied-icon {
+            font-size: 5rem;
+            color: var(--error-red);
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: shake 0.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes shake {
+            from { transform: rotate(-5deg); }
+            to { transform: rotate(5deg); }
+        }
+        
+        .denied-message {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .denied-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--error-red);
+            margin-bottom: 1rem;
+        }
+        
+        .denied-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-text);
+            margin-bottom: 2rem;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .reason-box {
+            background: rgba(255, 68, 68, 0.1);
+            border: 2px solid var(--error-red);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- 배경 파티클 효과 -->
+    <div class="background-particles" id="particles"></div>
+
+    <div class="access-denied-container">
+        <div class="club-card" style="max-width: 600px;">
+            <!-- 거부 아이콘 -->
+            <div class="denied-icon">🚫</div>
+            
+            <!-- 메시지 -->
+            <div class="denied-message">
+                <h1 class="denied-title">접근 거부용!</h1>
+                <p class="denied-subtitle">죄송하지만 이 구역에 들어갈 권한이 없습니다</p>
+            </div>
+
+            <!-- 이유 설명 -->
+            <div class="reason-box">
+                <h3 style="color: var(--error-red); margin-bottom: 1rem;">왜 접근이 거부되었나요?</h3>
+                <p style="color: var(--gray-text); line-height: 1.6;">
+                    셜록 누렁의 철벽 보안 시스템이 작동했습니다용!<br>
+                    이 구역은 특별한 권한을 가진 회원만 입장할 수 있어요.<br><br>
+                    
+                    <strong style="color: var(--neon-blue);">필요한 권한:</strong><br>
+                    • VIP 회원 (VIP 라운지 접근시)<br>
+                    • 관리자 권한 (관리자 구역 접근시)<br>
+                    • 특별 허가 (비밀의 방 접근시)
+                </p>
+            </div>
+
+            <!-- 액션 버튼들 -->
+            <div class="actions">
+                <button class="club-btn" onclick="goBack()" style="background: var(--gray-text);">
+                    이전 페이지로
+                </button>
+                <button class="club-btn" onclick="location.href='/club/main'">
+                    메인홀로 이동
+                </button>
+                <button class="club-btn" onclick="contactAdmin()" style="background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));">
+                    관리자에게 문의
+                </button>
+            </div>
+
+            <!-- 도움말 -->
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255, 0, 128, 0.2);">
+                <h4 style="color: var(--neon-pink); margin-bottom: 1rem;">권한 획득 방법</h4>
+                <div style="color: var(--gray-text); font-size: 0.9rem; line-height: 1.6;">
+                    <p><strong>VIP 회원 되기:</strong> 관리자에게 VIP 승급을 요청하세요</p>
+                    <p><strong>특별 허가:</strong> 클럽 이벤트 참여 시 특별 권한을 얻을 수 있어요</p>
+                    <p><strong>문의:</strong> admin@secretclub.com 또는 클럽 내 상담소 이용</p>
+                </div>
+            </div>
+
+            <!-- 셜록 누렁의 한마디 -->
+            <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: rgba(255, 0, 128, 0.05); border-radius: 10px;">
+                <p style="color: var(--gray-text); font-size: 0.9rem; font-style: italic;">
+                    "보안은 선택이 아닌 필수입니다용! 권한 없는 접근을 차단하는 것도 우리 클럽의 중요한 규칙이죠!" - 셜록 누렁
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 배경 파티클 생성 (빨간색 계열로)
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                
+                // 경고 색상들
+                const colors = ['#ff4444', '#ff0080', '#ff6600'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 이전 페이지로 이동
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                location.href = '/club/main';
+            }
+        }
+
+        // 관리자에게 문의
+        function contactAdmin() {
+            const message = `안녕하세요! 클럽 회원입니다.
+
+접근 권한에 대해 문의드립니다:
+• 현재 시간: ${new Date().toLocaleString()}
+• 접근 시도한 페이지: ${document.referrer || '알 수 없음'}
+• 문의 내용: [여기에 문의사항을 적어주세요]
+
+감사합니다!`;
+
+            // 실제로는 클럽 내 메시지 시스템이나 이메일을 사용
+            if (confirm('관리자에게 문의 메시지를 보내시겠습니까?')) {
+                // 여기에 실제 문의 시스템 연동
+                alert('📧 관리자에게 문의가 전송되었습니다용! 빠른 시일 내에 답변드리겠어요.');
+            }
+        }
+
+        // 페이지 로드 시 파티클 생성
+        document.addEventListener('DOMContentLoaded', createParticles);
+
+        // 접근 거부 효과음 (선택사항)
+        setTimeout(() => {
+            console.log('🚨 보안 시스템 경고: 권한 없는 접근이 감지되었습니다!');
+        }, 500);
+    </script>
+</body>
+</html>

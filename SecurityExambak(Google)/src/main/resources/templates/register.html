@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>댕댕이 클럽 - 회원가입</title>
+    <link rel="stylesheet" href="/css/club-common.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌟</text></svg>">
+</head>
+<body>
+    <!-- 배경 파티클 효과 -->
+    <div class="background-particles" id="particles"></div>
+
+    <div class="club-container">
+        <div class="club-card" style="max-width: 500px;">
+            <!-- 클럽 로고 -->
+            <h1 class="club-logo neon-text">JOIN THE CLUB</h1>
+            
+            <!-- 환영 메시지 -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: var(--neon-purple); font-size: 1.2rem; margin-bottom: 0.5rem;">클럽 신규 회원 등록용!</h2>
+                <p style="color: var(--gray-text); font-size: 0.9rem;">셜록 누렁이 직접 심사하는 특별한 클럽입니다</p>
+            </div>
+
+            <!-- 에러/성공 메시지 -->
+            <div th:if="${error}" class="club-message error" th:text="${error}">
+                에러 메시지가 여기에 표시됩니다
+            </div>
+            
+            <div th:if="${success}" class="club-message success" th:text="${success}">
+                성공 메시지가 여기에 표시됩니다  
+            </div>
+
+            <!-- 회원가입 폼 -->
+            <form class="club-form" action="/club/register" method="post" onsubmit="return validateForm()">
+                <div class="form-group">
+                    <label for="username">클럽 아이디</label>
+                    <input type="text" 
+                           id="username" 
+                           name="username" 
+                           placeholder="영문, 숫자 조합 4-20자"
+                           required
+                           pattern="[a-zA-Z0-9]{4,20}"
+                           autocomplete="username">
+                    <small style="color: var(--gray-text); font-size: 0.8rem;">영문과 숫자만 사용 가능합니다용</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">이메일 주소</label>
+                    <input type="email" 
+                           id="email" 
+                           name="email" 
+                           placeholder="your@email.com"
+                           required
+                           autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" 
+                           id="password" 
+                           name="password" 
+                           placeholder="안전한 비밀번호 8자 이상"
+                           required
+                           minlength="8"
+                           autocomplete="new-password">
+                    <small style="color: var(--gray-text); font-size: 0.8rem;">8자 이상, 영문/숫자/특수문자 조합 권장</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">비밀번호 확인</label>
+                    <input type="password" 
+                           id="confirmPassword" 
+                           name="confirmPassword" 
+                           placeholder="비밀번호를 다시 입력하세요"
+                           required
+                           autocomplete="new-password">
+                </div>
+
+                <div class="form-group">
+                    <label for="nickname">클럽 내 닉네임</label>
+                    <input type="text" 
+                           id="nickname" 
+                           name="nickname" 
+                           placeholder="클럽에서 불릴 멋진 이름"
+                           required
+                           maxlength="20">
+                    <small style="color: var(--gray-text); font-size: 0.8rem;">한글, 영문, 숫자, 이모지 사용 가능 (20자 이내)</small>
+                </div>
+
+                <button type="submit" class="club-btn">
+                    클럽 회원 되기
+                </button>
+            </form>
+
+            <!-- 추가 링크 -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="color: var(--gray-text); margin-bottom: 1rem;">이미 클럽 회원이신가요?</p>
+                <a href="/club/login" class="club-link">로그인하러 가기</a>
+            </div>
+
+            <!-- 셜록 누렁의 한마디 -->
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255, 0, 128, 0.2);">
+                <p style="color: var(--gray-text); font-size: 0.85rem; font-style: italic;">
+                    "새로운 회원을 환영합니다용! 함께 멍청함을 탐구해봐요!" - 셜록 누렁
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 배경 파티클 생성
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                
+                // 랜덤 색상  
+                const colors = ['#ff0080', '#00ffff', '#8000ff'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 폼 유효성 검사
+        function validateForm() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('비밀번호가 일치하지 않습니다용! 다시 확인해주세요.');
+                return false;
+            }
+            
+            const submitBtn = document.querySelector('.club-btn');
+            submitBtn.innerHTML = '🔄 회원가입 처리 중...';
+            submitBtn.disabled = true;
+            
+            return true;
+        }
+
+        // 비밀번호 확인 실시간 검증
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.style.borderColor = 'var(--error-red)';
+                this.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.3)';
+            } else if (confirmPassword && password === confirmPassword) {
+                this.style.borderColor = 'var(--success-green)';
+                this.style.boxShadow = '0 0 15px rgba(0, 255, 136, 0.3)';
+            } else {
+                this.style.borderColor = 'transparent';
+                this.style.boxShadow = 'none';
+            }
+        });
+
+        // 페이지 로드 시 파티클 생성
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
+</body>
+</html>

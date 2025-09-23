@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>댕댕이 클럽 - 로그인</title>
+	<style>
+		.social-login-section {
+		    margin: 2rem 0;
+		    text-align: center;
+		}
+
+		.social-login-title {
+		    color: var(--neon-blue);
+		    font-size: 1rem;
+		    margin-bottom: 1.5rem;
+		    position: relative;
+		}
+
+		.social-buttons {
+		    display: flex;
+		    flex-direction: column;
+		    gap: 1rem;
+		}
+
+		.social-btn {
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    gap: 1rem;
+		    padding: 1rem 1.5rem;
+		    border: 2px solid transparent;
+		    border-radius: 15px;
+		    text-decoration: none;
+		    font-weight: 600;
+		    font-size: 1rem;
+		    transition: all 0.3s ease;
+		    position: relative;
+		    overflow: hidden;
+		}
+
+		.social-btn::before {
+		    content: '';
+		    position: absolute;
+		    top: 0;
+		    left: -100%;
+		    width: 100%;
+		    height: 100%;
+		    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+		    transition: left 0.5s;
+		}
+
+		.social-btn:hover::before {
+		    left: 100%;
+		}
+
+		.social-btn-google {
+		    background: linear-gradient(135deg, #DB4437, #F40000);
+		    color: white;
+		    border-color: #DB4437;
+		}
+
+		.social-btn-google:hover {
+		    transform: translateY(-2px);
+		    box-shadow: 0 8px 25px rgba(219, 68, 55, 0.4);
+		    border-color: #fff;
+		}
+
+		.social-btn-kakao {
+		    background: linear-gradient(135deg, #FEE500, #FFCD00);
+		    color: #3C1E1E;
+		    border-color: #FEE500;
+		}
+
+		.social-btn-kakao:hover {
+		    transform: translateY(-2px);
+		    box-shadow: 0 8px 25px rgba(254, 229, 0, 0.4);
+		    border-color: #3C1E1E;
+		}
+
+		.social-btn-icon {
+		    font-size: 1.2rem;
+		}
+	</style>
+    <link rel="stylesheet" href="/css/club-common.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
+</head>
+<body>
+    <!-- 배경 파티클 효과 -->
+    <div class="background-particles" id="particles"></div>
+
+    <div class="club-container">
+        <div class="club-card">
+            <!-- 클럽 로고 -->
+            <h1 class="club-logo neon-text">Wal Wal CLUB</h1>
+            
+            <!-- 환영 메시지 -->
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="color: var(--neon-blue); font-size: 1.2rem; margin-bottom: 0.5rem;">댕댕이 클럽에 오신 걸 환영합니다용!</h2>
+                <p style="color: var(--gray-text); font-size: 0.9rem;">셜록 누렁이 만든 철벽 보안 시스템을 체험해보세요</p>
+            </div>
+
+            <!-- 에러/성공 메시지 -->
+            <div th:if="${param.error}" class="club-message error">
+                아이디 또는 비밀번호가 올바르지 않습니다용! 다시 시도해주세요.
+            </div>
+            
+            <div th:if="${param.logout}" class="club-message success">
+                 클럽에서 안전하게 나가셨습니다용! 또 놀러 오세요!
+            </div>
+			
+			<div class="social-login-section">
+			    <h3 class="social-login-title">🎊 소셜 계정으로 간편 입장</h3>
+			    
+			    <div class="social-buttons">
+			        <!-- 구글 로그인 -->
+			        <a href="/oauth2/authorization/google" class="social-btn social-btn-google">
+			            <span class="social-btn-icon">🤓</span>
+			            <span>구글로 입장하기</span>
+			        </a>
+			        
+			        <!-- 카카오 로그인 -->
+			        <a href="/oauth2/authorization/kakao" class="social-btn social-btn-kakao">
+			            <span class="social-btn-icon">💬</span>
+			            <span>카카오로 입장하기</span>
+			        </a>
+			    </div>
+			</div>
+
+            <!-- 로그인 폼 -->
+            <form class="club-form" action="/club/authenticate" method="post">
+                <div class="form-group">
+                    <label for="username">클럽 아이디</label>
+                    <input type="text" 
+                           id="username" 
+                           name="username" 
+                           placeholder="클럽 회원 아이디를 입력하세요"
+                           required
+                           autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" 
+                           id="password" 
+                           name="password" 
+                           placeholder="비밀번호를 입력하세요"
+                           required
+                           autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="club-btn">
+                    클럽 입장하기
+                </button>
+            </form>
+
+            <!-- 추가 링크 -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="color: var(--gray-text); margin-bottom: 1rem;">아직 클럽 회원이 아니신가요?</p>
+                <a href="/club/register" class="club-link">새 회원으로 가입하기</a>
+            </div>
+
+            <!-- 셜록 누렁의 한마디 -->
+            <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255, 0, 128, 0.2);">
+                <p style="color: var(--gray-text); font-size: 0.85rem; font-style: italic;">
+                    "보안의 기본은 구조를 아는 것입니다용!" - 셜록 누렁
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 배경 파티클 생성
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                
+                // 랜덤 색상
+                const colors = ['#ff0080', '#00ffff', '#8000ff'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 페이지 로드 시 파티클 생성
+        document.addEventListener('DOMContentLoaded', createParticles);
+
+        // 폼 제출 시 로딩 효과
+        document.querySelector('.club-form').addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('.club-btn');
+            submitBtn.innerHTML = '🔄 클럽 입장 처리 중...';
+            submitBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>

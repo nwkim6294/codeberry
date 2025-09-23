@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상담소 - SECRET CLUB</title>
+    <link rel="stylesheet" href="/css/club-common.css">
+</head>
+<body>
+    <nav class="club-nav">
+        <div class="nav-content">
+            <div class="nav-logo">💬 SECRET CLUB</div>
+            <div class="nav-links">
+                <span class="nav-user" sec:authentication="name"></span>
+                <a href="/club/logout" class="club-link">로그아웃</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="background-particles" id="particles"></div>
+    
+    <div class="club-container" style="padding-top: 100px;">
+        <div class="club-card" style="max-width: 800px;">
+            <h1 class="club-logo neon-text">💬 셜록 누렁의 상담소</h1>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <h2 style="color: var(--neon-blue);">Spring Security 고민 해결사!</h2>
+                <p style="color: var(--gray-text);">어려운 보안 문제, 셜록 누렁이 도와드릴게요용!</p>
+            </div>
+
+            <!-- 상담 옵션들 -->
+            <div style="display: grid; gap: 1.5rem; margin: 2rem 0;">
+                <div style="background: rgba(0,255,136,0.1); border-left: 4px solid var(--success-green); padding: 1.5rem; border-radius: 10px;">
+                    <h4 style="color: var(--success-green); margin-bottom: 1rem;">🔧 기술 상담</h4>
+                    <p style="color: var(--gray-text); margin-bottom: 1rem;">
+                        인증, 인가, 필터체인 등 Spring Security 기술적 문제를 해결해드려요용!
+                    </p>
+                    <button class="club-btn" onclick="showTechSupport()" style="background: var(--success-green);">기술 상담 받기</button>
+                </div>
+                
+                <div style="background: rgba(0,255,255,0.1); border-left: 4px solid var(--neon-blue); padding: 1.5rem; border-radius: 10px;">
+                    <h4 style="color: var(--neon-blue); margin-bottom: 1rem;">📚 학습 상담</h4>
+                    <p style="color: var(--gray-text); margin-bottom: 1rem;">
+                        Spring Security 학습 방법과 커리큘럼을 안내해드려요용!
+                    </p>
+                    <button class="club-btn" onclick="showLearningPath()">학습 상담 받기</button>
+                </div>
+                
+                <div style="background: rgba(255,0,128,0.1); border-left: 4px solid var(--neon-pink); padding: 1.5rem; border-radius: 10px;">
+                    <h4 style="color: var(--neon-pink); margin-bottom: 1rem;">💡 아이디어 상담</h4>
+                    <p style="color: var(--gray-text); margin-bottom: 1rem;">
+                        프로젝트 보안 설계와 구현 아이디어를 함께 고민해봐요용!
+                    </p>
+                    <button class="club-btn" onclick="showIdeaConsult()" style="background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));">아이디어 상담</button>
+                </div>
+            </div>
+
+            <!-- 셜록 누렁의 한마디 -->
+            <div style="background: rgba(255,255,255,0.05); border-radius: 15px; padding: 2rem; margin: 2rem 0; text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🕵️‍♂️</div>
+                <blockquote style="font-style: italic; color: var(--neon-blue); font-size: 1.1rem; margin-bottom: 1rem;">
+                    "보안은 한 번에 완성되는 것이 아니라, 지속적인 학습과 개선의 과정이에요용!<br>
+                    어떤 어려움이라도 함께 해결해봅시다용!"
+                </blockquote>
+                <p style="color: var(--neon-pink); font-weight: 600;">- 셜록 누렁 -</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/club/main" class="club-btn">메인으로 돌아가기</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 25;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+                
+                const colors = ['#00ff88', '#00ffff', '#ff0080'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        function showTechSupport() {
+            alert('🔧 기술 상담용!\n\n주요 해결 분야:\n• 인증/인가 구현\n• 커스텀 필터 개발\n• OAuth2 연동\n• JWT 토큰 처리\n• 보안 설정 최적화\n\n언제든 문의하세요용!');
+        }
+        
+        function showLearningPath() {
+            alert('📚 학습 로드맵용!\n\n추천 학습 순서:\n1. 기본 개념 (인증 vs 인가)\n2. Form Login 구현\n3. 커스텀 UserDetailsService\n4. 권한 기반 접근 제어\n5. OAuth2 & JWT\n6. 고급 보안 설정\n\n차근차근 배워봅시다용!');
+        }
+        
+        function showIdeaConsult() {
+            alert('💡 아이디어 브레인스토밍용!\n\n함께 고민해볼 주제들:\n• 마이크로서비스 보안 아키텍처\n• API Gateway 인증 전략\n• 다중 인증 방식 통합\n• 보안 모니터링 시스템\n\n창의적인 아이디어를 나눠요용!');
+        }
+        
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
+</body>
+</html>
